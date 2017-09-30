@@ -9,10 +9,11 @@ class App extends Component {
         <div className="App-header">
           <h2>Readable</h2>
         </div>
-        <p className="container">
+        <div className="container">
           <p>Welcome to readable!</p>
+          <p>A React-redux place for post-comments-categories </p>
           <PostList/>
-        </p>
+        </div>
       </div>
     )
   }
