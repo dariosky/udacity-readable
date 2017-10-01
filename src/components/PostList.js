@@ -1,7 +1,26 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchPosts} from '../flows/actions'
+import Card, {CardHeader} from 'material-ui/Card'
+import moment from 'moment'
 
+function Post(props) {
+  const post = props.post,
+    date = new Date(post.timestamp)
+
+  function subheader(post) {
+    return `by ${post.author} - ${moment(date).format("MMM Do YYYY")}`
+  }
+
+  return <div>
+    <Card className="post">
+      <CardHeader
+        title={post.title}
+        subheader={subheader(post)}
+      />
+    </Card>
+  </div>
+}
 
 class PostList extends React.Component {
   componentDidMount() {
@@ -9,19 +28,14 @@ class PostList extends React.Component {
   }
 
   render() {
-    console.log(this.props.posts)
     const {posts, status, message} = this.props.posts
 
-    console.log(posts)
     return (
       <div>
-        {message?<div className={[status, 'message']}>{message}</div>:''}
-        {posts?posts.map(post => (
-          <div className="post" key={post.id}>
-            <h1>{post.title}</h1>
-            by {post.author}
-          </div>
-        )):''}
+        {message ? <div className={[status, 'message']}>{message}</div> : ''}
+        {posts ? posts.map(post => (
+          <Post post={post} key={post.id}/>
+        )) : ''}
 
       </div>
 

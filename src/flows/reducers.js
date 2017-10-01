@@ -27,7 +27,6 @@ function posts(state = {}, action) {
         posts: action.posts,
       }
     default :
-      console.warn('Hey, unknown action:', action)
       return state
   }
 }

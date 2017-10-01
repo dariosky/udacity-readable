@@ -6,7 +6,6 @@ import * as actions from './actions'
 function* fetchPosts(action) {
   try {
     const posts = yield call(api.allPosts)
-    console.log(action, posts)
     yield put(actions.postFetchSuccess(posts))
   } catch (e) {
     yield put(actions.postFetchFail(e.message))
