@@ -1,7 +1,9 @@
 import {combineReducers} from 'redux'
 
 import {
-  FETCH_POSTS,
+  FETCH_CATEGORIES,
+  FETCH_CATEGORIES_FAILED, FETCH_CATEGORIES_SUCCEEDED, FETCH_POST_SUCCEEDED,
+  FETCH_POSTS, FETCH_POSTS_FAILED,
 } from './actions'
 
 function posts(state = {}, action) {
@@ -12,14 +14,14 @@ function posts(state = {}, action) {
         status: 'downloading',
         posts: [],
       }
-    case 'POST_FETCH_FAILED':
+    case FETCH_POSTS_FAILED:
       return {
         ...state,
         status: 'error',
         message: 'Cannot get posts from API, is it running? ' + action.message,
         posts: [],
       }
-    case 'POST_FETCH_SUCCEEDED':
+    case FETCH_POST_SUCCEEDED:
       return {
         ...state,
         message: '',
@@ -31,6 +33,33 @@ function posts(state = {}, action) {
   }
 }
 
+function categories(state = {}, action) {
+  switch (action.type) {
+    case FETCH_CATEGORIES:
+      return {
+        ...state,
+        status: 'downloading',
+        categories: [],
+      }
+    case FETCH_CATEGORIES_FAILED:
+      return {
+        ...state,
+        status: 'Cannot get posts from API, is it running? ' + action.message,
+        categories: [],
+      }
+
+    case FETCH_CATEGORIES_SUCCEEDED:
+      return {
+        ...state,
+        status: 'success',
+        categories: action.categories,
+      }
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   posts,
+  categories,
 })

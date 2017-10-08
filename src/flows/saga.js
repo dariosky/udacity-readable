@@ -1,8 +1,8 @@
-import {call, put, takeEvery} from 'redux-saga/effects'
+import {call, put, takeEvery, all} from 'redux-saga/effects'
 import * as api from '../utils/api'
 import * as actions from './actions'
 
-// worker Saga: will be fired on USER_FETCH_REQUESTED actions
+// worker Saga: will be fired on actions
 function* fetchPosts(action) {
   try {
     const posts = yield call(api.allPosts)
@@ -12,13 +12,31 @@ function* fetchPosts(action) {
   }
 }
 
-/*
-  Starts fetchUser on each dispatched `USER_FETCH_REQUESTED` action.
-  Allows concurrent fetches of user.
-*/
-function* saga() {
-  yield takeEvery("FETCH_POSTS", fetchPosts)
+function* fetchCategories(action) {
+  try {
+    const categories = yield call(api.allCategories)
+    yield put(actions.categoriesFetchSuccess(categories.categories))
+  } catch (e) {
+    yield put(actions.categoriesFetchFailed(e.message))
+  }
 }
 
+/*
+  Starts fetchPosts on each dispatched `FETCH_POSTS` action.
+  Allows concurrent fetches of posts.
+*/
+function* fetchPostSaga() {
+  yield takeEvery(actions.FETCH_POSTS, fetchPosts)
+}
 
-export default saga
+function* fetchCategoriesSaga() {
+  yield takeEvery(actions.FETCH_CATEGORIES, fetchCategories)
+}
+
+export default function* rootSaga() {
+  yield all([
+    fetchPostSaga(),
+    fetchCategoriesSaga(),
+  ])
+}
+

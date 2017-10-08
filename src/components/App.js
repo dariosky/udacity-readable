@@ -5,6 +5,8 @@ import {Home} from './Home'
 import Route from 'react-router-dom/es/Route'
 import {PageNotFound} from './PageNotFound'
 import Switch from 'react-router-dom/es/Switch'
+import {Link} from 'react-router-dom'
+
 
 class App extends Component {
   render() {
@@ -12,9 +14,13 @@ class App extends Component {
       <div className="App">
         <AppBar position="static" color="default">
           <Toolbar>
-            <Typography type="title" color="inherit">
-              Readable
-            </Typography>
+            <Link to="/"
+                  style={{'color': '#333', 'textDecoration': 'none'}}>
+              <Typography type="title" color="inherit">
+                Readable - React Udacity -
+                Project 2 - by Dario Varotto
+              </Typography>
+            </Link>
           </Toolbar>
         </AppBar>
 

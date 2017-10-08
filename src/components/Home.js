@@ -1,10 +1,10 @@
 import React from 'react'
 import PostList from './PostList'
+import CategoryList from './CategoryList'
 
 export function Home() {
   return <div className="container">
-    <p>Welcome to readable!</p>
-    <p>A React-redux place for post-comments-categories </p>
+    <CategoryList/>
     <PostList/>
   </div>
 }
