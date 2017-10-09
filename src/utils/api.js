@@ -15,6 +15,18 @@ export const allPosts = () =>
   fetch(`${api}/posts`, {headers})
     .then(res => res.json())
 
+const getCategoryPosts = (category) =>
+  fetch(`${api}/${category}/posts`, {headers})
+    .then(res => res.json())
+
+
+export const getPosts = (category) => {
+  if (category === 'all') return allPosts()
+  else {
+    return getCategoryPosts(category)
+  }
+}
+
 export const allCategories = () =>
   fetch(`${api}/categories`, {headers})
     .then(res => res.json())

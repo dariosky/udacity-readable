@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchCategories} from '../flows/actions'
+import {changeCategory, fetchCategories, fetchPosts} from '../flows/actions'
 import {Tabs, Tab} from 'material-ui'
 import withRouter from 'react-router-dom/es/withRouter'
 
@@ -10,17 +10,21 @@ class CategoryList extends React.Component {
     this.props.fetchCategories()
   }
 
-  changeTab = (event, value) => {
-    this.props.history.push(`/category/${value}`)
+  changeTab = (event, nextCategory) => {
+    this.props.history.push(`/category/${nextCategory}`)
+    if (this.props.categories.current !== nextCategory) {
+      this.props.changeCategory(nextCategory)
+      this.props.fetchPosts(nextCategory)
+    }
   }
 
   render() {
-    const {categories, status, message, currentCategory} = this.props.categories
+    const {categories, status, message, current} = this.props.categories
     return (
       <div>
         {message ? <div className={[status, 'message']}>{message}</div> : ''}
         <Tabs
-          value={currentCategory || 'all'}
+          value={current || 'all'}
           indicatorColor="primary"
           textColor="primary"
           scrollable
@@ -48,8 +52,16 @@ function mapStateToProps({categories}) {
 function mapDispatchToProps(dispatch) {
   return {
     fetchCategories: () => dispatch(
-      fetchCategories() // dispatch the action
-    ) // get all the categories
+      fetchCategories() // get all the categories
+    ),
+
+    changeCategory: (nextCategory) => dispatch(
+      changeCategory(nextCategory),
+    ),
+
+    fetchPosts: (nextCategory) => dispatch(
+      fetchPosts(nextCategory),
+    ),
   }
 }
 

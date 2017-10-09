@@ -6,9 +6,12 @@ export const FETCH_CATEGORIES = 'FETCH_CATEGORIES'
 export const FETCH_CATEGORIES_SUCCEEDED = 'FETCH_CATEGORIES_SUCEEDED'
 export const FETCH_CATEGORIES_FAILED = 'FETCH_CATEGORIES_FAILED'
 
-export function fetchPosts() {
+export const CHANGE_CATEGORY = 'CHANGE_CATEGORY'
+
+export function fetchPosts(category) {
   return {
     type: FETCH_POSTS,
+    category: category || 'all',
   }
 }
 
@@ -34,3 +37,8 @@ export function categoriesFetchSuccess(categories) {
 export function categoriesFetchFailed(message) {
   return {type: FETCH_CATEGORIES_FAILED, message}
 }
+
+export function changeCategory(category) {
+  return {type: CHANGE_CATEGORY, category}
+}
+

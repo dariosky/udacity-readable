@@ -1,9 +1,13 @@
 import {combineReducers} from 'redux'
 
 import {
+  CHANGE_CATEGORY,
   FETCH_CATEGORIES,
-  FETCH_CATEGORIES_FAILED, FETCH_CATEGORIES_SUCCEEDED, FETCH_POST_SUCCEEDED,
-  FETCH_POSTS, FETCH_POSTS_FAILED,
+  FETCH_CATEGORIES_FAILED,
+  FETCH_CATEGORIES_SUCCEEDED,
+  FETCH_POST_SUCCEEDED,
+  FETCH_POSTS,
+  FETCH_POSTS_FAILED,
 } from './actions'
 
 function posts(state = {}, action) {
@@ -53,6 +57,11 @@ function categories(state = {}, action) {
         ...state,
         status: 'success',
         categories: action.categories,
+      }
+    case CHANGE_CATEGORY:
+      return {
+        ...state,
+        current: action.category,
       }
     default:
       return state

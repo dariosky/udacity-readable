@@ -24,7 +24,7 @@ function Post(props) {
 
 class PostList extends React.Component {
   componentDidMount() {
-    this.props.fetchPosts()
+    this.props.fetchPosts(this.props.currentCategory)
   }
 
   render() {
@@ -43,16 +43,19 @@ class PostList extends React.Component {
   }
 }
 
-function mapStateToProps({posts}) {
+function mapStateToProps(state) {
   // subscribe to store changes - when they happen, put them in the component store
-  return {posts}
+  return {
+    posts: state.posts,
+    currentCategory: state.categories.current,
+  }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     fetchPosts: () => dispatch(
-      fetchPosts() // dispatch the action
-    ) // get all the posts
+      fetchPosts() // get all the posts
+    ),
   }
 }
 
