@@ -13,7 +13,9 @@ A content and comment web app.
 Bootstrapped with create-react-app.
 
 UI powered by [material-ui 1.0beta](https://material-ui-next.com).
-Using React-Router for routing, React Saga for dealing with async API calls. 
+Using [React-Router](https://github.com/ReactTraining/react-router)
+ for routing, [Redux-Saga](https://github.com/redux-saga/redux-saga)
+ for dealing with async API calls. 
 
 ### Notes
 

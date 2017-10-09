@@ -3,6 +3,13 @@ import {connect} from 'react-redux'
 import {fetchPosts} from '../flows/actions'
 import Card, {CardHeader} from 'material-ui/Card'
 import moment from 'moment'
+import {CircularProgress} from 'material-ui/Progress'
+
+const centerStyle = {
+  margin: '20px auto',
+  width: '50px',
+  display: 'block',
+}
 
 function Post(props) {
   const post = props.post,
@@ -33,6 +40,7 @@ class PostList extends React.Component {
     return (
       <div>
         {message ? <div className={[status, 'message']}>{message}</div> : ''}
+        {status === 'downloading' ? <CircularProgress style={centerStyle} size={50}/> : ''}
         {posts ? posts.map(post => (
           <Post post={post} key={post.id}/>
         )) : ''}

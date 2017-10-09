@@ -1,9 +1,9 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {changeCategory, fetchCategories, fetchPosts} from '../flows/actions'
-import {Tabs, Tab} from 'material-ui'
+import {Tab, Tabs} from 'material-ui'
 import withRouter from 'react-router-dom/es/withRouter'
-
+import {LinearProgress} from 'material-ui/Progress'
 
 class CategoryList extends React.Component {
   componentDidMount() {
@@ -23,6 +23,7 @@ class CategoryList extends React.Component {
     return (
       <div>
         {message ? <div className={[status, 'message']}>{message}</div> : ''}
+        {status === 'downloading' ? <LinearProgress/> : ''}
         <Tabs
           value={current || 'all'}
           indicatorColor="primary"
@@ -35,7 +36,7 @@ class CategoryList extends React.Component {
           {categories ? categories.map(category => (
             <Tab label={category.name} value={category.path}
                  key={category.path}/>
-          )) : ''}
+          )) : ""}
 
         </Tabs>
       </div>
