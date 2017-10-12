@@ -4,12 +4,22 @@ import {fetchPosts} from '../flows/actions'
 import Card, {CardHeader} from 'material-ui/Card'
 import moment from 'moment'
 import {CircularProgress} from 'material-ui/Progress'
+import Badge from 'material-ui/Badge'
+import ThumbUp from 'material-ui-icons/ThumbUp'
+import {CardContent} from 'material-ui'
+import {withStyles} from 'material-ui/styles'
 
 const centerStyle = {
   margin: '20px auto',
   width: '50px',
   display: 'block',
 }
+
+const badgeStyle = theme => ({
+  badge: {
+    right: "-24px",
+  }
+})
 
 function Post(props) {
   const post = props.post,
@@ -18,6 +28,7 @@ function Post(props) {
   function subheader(post) {
     return `by ${post.author} - ${moment(date).format("MMM Do YYYY")}`
   }
+  const StyledBadge = withStyles(badgeStyle)(Badge)
 
   return <div>
     <Card className="post">
@@ -25,6 +36,11 @@ function Post(props) {
         title={post.title}
         subheader={subheader(post)}
       />
+      <CardContent>
+        <StyledBadge badgeContent={post.voteScore} color="primary">
+          <ThumbUp/>
+        </StyledBadge>
+      </CardContent>
     </Card>
   </div>
 }

@@ -37,7 +37,6 @@ class CategoryList extends React.Component {
             <Tab label={category.name} value={category.path}
                  key={category.path}/>
           )) : ""}
-
         </Tabs>
       </div>
     )

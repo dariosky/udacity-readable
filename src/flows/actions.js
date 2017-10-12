@@ -8,6 +8,8 @@ export const FETCH_CATEGORIES_FAILED = 'FETCH_CATEGORIES_FAILED'
 
 export const CHANGE_CATEGORY = 'CHANGE_CATEGORY'
 
+export const EDIT_NEW_POST = 'EDIT_NEW_POST'
+
 export function fetchPosts(category) {
   return {
     type: FETCH_POSTS,
@@ -42,3 +44,8 @@ export function changeCategory(category) {
   return {type: CHANGE_CATEGORY, category}
 }
 
+
+/***/
+export function newPostModal() {
+  return {type: EDIT_NEW_POST}
+}
