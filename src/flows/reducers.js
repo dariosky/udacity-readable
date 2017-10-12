@@ -7,7 +7,7 @@ import {
   FETCH_CATEGORIES_SUCCEEDED,
   FETCH_POST_SUCCEEDED,
   FETCH_POSTS,
-  FETCH_POSTS_FAILED,
+  FETCH_POSTS_FAILED, SORT_BY, SORT_DIRECTION,
 } from './actions'
 
 function posts(state = {}, action) {
@@ -68,7 +68,28 @@ function categories(state = {}, action) {
   }
 }
 
+function options(state = {
+  sort: 'vote',
+  sortDirection: 'desc',
+}, action) {
+  switch (action.type) {
+    case SORT_BY:
+      return {
+        ...state,
+        sort: action.method,
+      }
+    case SORT_DIRECTION:
+      return {
+        ...state,
+        sortDirection: action.direction,
+      }
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   posts,
   categories,
+  options,
 })

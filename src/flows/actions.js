@@ -10,6 +10,9 @@ export const CHANGE_CATEGORY = 'CHANGE_CATEGORY'
 
 export const EDIT_NEW_POST = 'EDIT_NEW_POST'
 
+export const SORT_BY = 'SORT_BY'
+export const SORT_DIRECTION = 'SORT_DIRECTION'
+
 export function fetchPosts(category) {
   return {
     type: FETCH_POSTS,
@@ -48,4 +51,12 @@ export function changeCategory(category) {
 /***/
 export function newPostModal() {
   return {type: EDIT_NEW_POST}
+}
+
+export function sortBy(method) {
+  return {type: SORT_BY, method}
+}
+
+export function sortDirection(direction) {
+  return {type: SORT_DIRECTION, direction}
 }

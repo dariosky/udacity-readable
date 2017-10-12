@@ -20,8 +20,8 @@ Using [React-Router](https://github.com/ReactTraining/react-router)
 ### Notes
 
 When fetching the list of posts per category, I'm doing an API call when changing the category:
-having small posts, would allow also to keep all posts in the state and just filter them,
-but I wanted to deal with the more generic case, where we'll have many posts, and they can
+having just a few posts, would allow to keep all posts in the state and just filter them,
+but I wanted to deal with the generic case, where we'll have many posts, and they can
 come paginated, so a different category page will need a new API call.
 
 

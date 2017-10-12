@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchPosts} from '../flows/actions'
+import * as actions from '../flows/actions'
 import Card, {CardHeader} from 'material-ui/Card'
 import moment from 'moment'
 import {CircularProgress} from 'material-ui/Progress'
@@ -8,6 +8,7 @@ import Badge from 'material-ui/Badge'
 import ThumbUp from 'material-ui-icons/ThumbUp'
 import {CardContent} from 'material-ui'
 import {withStyles} from 'material-ui/styles'
+import sortBy from 'sort-by'
 
 const centerStyle = {
   margin: '20px auto',
@@ -18,7 +19,7 @@ const centerStyle = {
 const badgeStyle = theme => ({
   badge: {
     right: "-24px",
-  }
+  },
 })
 
 function Post(props) {
@@ -28,6 +29,7 @@ function Post(props) {
   function subheader(post) {
     return `by ${post.author} - ${moment(date).format("MMM Do YYYY")}`
   }
+
   const StyledBadge = withStyles(badgeStyle)(Badge)
 
   return <div>
@@ -51,18 +53,24 @@ class PostList extends React.Component {
   }
 
   render() {
-    const {posts, status, message} = this.props.posts
-
+    const {posts, status, message} = this.props.posts,
+      {currentSort, currentSortDirection} = this.props
+    let sortedPosts = []
+    if (posts) {
+      // sort the posts
+      const sortField = currentSort === 'date' ? 'timestamp' : 'voteScore'
+      const sortKey = (currentSortDirection === 'desc' ? '-' : '') + sortField
+      console.log(sortKey)
+      sortedPosts = posts.sort(sortBy(sortKey))
+    }
     return (
       <div>
         {message ? <div className={[status, 'message']}>{message}</div> : ''}
         {status === 'downloading' ? <CircularProgress style={centerStyle} size={50}/> : ''}
-        {posts ? posts.map(post => (
+        {sortedPosts ? sortedPosts.map(post => (
           <Post post={post} key={post.id}/>
         )) : ''}
-
       </div>
-
     )
   }
 }
@@ -72,13 +80,15 @@ function mapStateToProps(state) {
   return {
     posts: state.posts,
     currentCategory: state.categories.current,
+    currentSort: state.options.sort,
+    currentSortDirection: state.options.sortDirection,
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     fetchPosts: () => dispatch(
-      fetchPosts() // get all the posts
+      actions.fetchPosts() // get all the posts
     ),
   }
 }
