@@ -11,6 +11,7 @@ class SortBar extends React.Component {
       nextSortDirection = currentSortDirection === 'asc' ? 'desc' : 'asc'
     return <Paper>
       <Typography align="right">
+        sorted by {currentSort} {currentSortDirection}
         <Button onClick={() => {
           this.props.sortBy(nextSortMethod)
         }}>

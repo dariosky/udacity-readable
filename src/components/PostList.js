@@ -18,6 +18,7 @@ const centerStyle = {
 
 const badgeStyle = theme => ({
   badge: {
+    top: 0,
     right: "-24px",
   },
 })
@@ -60,7 +61,6 @@ class PostList extends React.Component {
       // sort the posts
       const sortField = currentSort === 'date' ? 'timestamp' : 'voteScore'
       const sortKey = (currentSortDirection === 'desc' ? '-' : '') + sortField
-      console.log(sortKey)
       sortedPosts = posts.sort(sortBy(sortKey))
     }
     return (

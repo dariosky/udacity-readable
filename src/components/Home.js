@@ -4,6 +4,7 @@ import CategoryList from './CategoryList'
 import {Typography} from 'material-ui'
 import NewPostButton from './NewPostButton'
 import SortBar from './SortBar'
+import EditPostDialog from './EditPostDialog'
 
 export default function Home() {
   return <div className="container">
@@ -14,6 +15,7 @@ export default function Home() {
     <PostList/>
 
     <SortBar/>
+    <EditPostDialog/>
   </div>
 }
 

@@ -8,11 +8,15 @@ export const FETCH_CATEGORIES_FAILED = 'FETCH_CATEGORIES_FAILED'
 
 export const CHANGE_CATEGORY = 'CHANGE_CATEGORY'
 
-export const EDIT_NEW_POST = 'EDIT_NEW_POST'
+export const EDIT_POST = 'EDIT_POST'
+export const EDIT_POST_CANCEL = 'EDIT_POST_CANCEL'
+export const EDIT_POST_SAVE = 'EDIT_POST_SAVE'
 
 export const SORT_BY = 'SORT_BY'
 export const SORT_DIRECTION = 'SORT_DIRECTION'
 
+
+/* posts */
 export function fetchPosts(category) {
   return {
     type: FETCH_POSTS,
@@ -48,15 +52,24 @@ export function changeCategory(category) {
 }
 
 
-/***/
-export function newPostModal() {
-  return {type: EDIT_NEW_POST}
-}
-
+/* Sorting */
 export function sortBy(method) {
   return {type: SORT_BY, method}
 }
 
 export function sortDirection(direction) {
   return {type: SORT_DIRECTION, direction}
+}
+
+/* Posts details */
+export function newPostModal() {
+  return {type: EDIT_POST, post:{}}
+}
+
+export function cancelPostModal() {
+  return {type: EDIT_POST_CANCEL}
+}
+
+export function savePostModal(post) {
+  return {type: EDIT_POST_SAVE, post}
 }
