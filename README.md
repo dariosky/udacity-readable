@@ -24,4 +24,7 @@ having just a few posts, would allow to keep all posts in the state and just fil
 but I wanted to deal with the generic case, where we'll have many posts, and they can
 come paginated, so a different category page will need a new API call.
 
+In the `saga.js` we can enable `delayedRequest` to test
+delays on the API calls, and see the async sagas at work.
+
 

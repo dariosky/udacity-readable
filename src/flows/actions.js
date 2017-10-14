@@ -11,6 +11,8 @@ export const CHANGE_CATEGORY = 'CHANGE_CATEGORY'
 export const EDIT_POST = 'EDIT_POST'
 export const EDIT_POST_CANCEL = 'EDIT_POST_CANCEL'
 export const EDIT_POST_SAVE = 'EDIT_POST_SAVE'
+export const EDIT_POST_SUCCESS = 'EDIT_POST_SUCCESS'
+export const EDIT_POST_FAIL = 'EDIT_POST_FAIL'
 
 export const SORT_BY = 'SORT_BY'
 export const SORT_DIRECTION = 'SORT_DIRECTION'
@@ -63,7 +65,7 @@ export function sortDirection(direction) {
 
 /* Posts details */
 export function newPostModal() {
-  return {type: EDIT_POST, post:{}}
+  return {type: EDIT_POST, post: {}}
 }
 
 export function cancelPostModal() {
@@ -72,4 +74,12 @@ export function cancelPostModal() {
 
 export function savePostModal(post) {
   return {type: EDIT_POST_SAVE, post}
+}
+
+export function savePostSuccess(post) {
+  return {type: EDIT_POST_SUCCESS, post}
+}
+
+export function savePostFailed(message) {
+  return {type: EDIT_POST_FAIL, message}
 }

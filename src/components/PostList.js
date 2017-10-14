@@ -9,6 +9,8 @@ import ThumbUp from 'material-ui-icons/ThumbUp'
 import {CardContent} from 'material-ui'
 import {withStyles} from 'material-ui/styles'
 import sortBy from 'sort-by'
+import SortBar from './SortBar'
+import Message from './Message'
 
 const centerStyle = {
   margin: '20px auto',
@@ -63,13 +65,16 @@ class PostList extends React.Component {
       const sortKey = (currentSortDirection === 'desc' ? '-' : '') + sortField
       sortedPosts = posts.sort(sortBy(sortKey))
     }
+    const Sorted = posts ? <div>
+      {sortedPosts.map(post => ( <Post post={post} key={post.id}/> ))}
+      <SortBar/>
+    </div> : ''
+
     return (
       <div>
-        {message ? <div className={[status, 'message']}>{message}</div> : ''}
+        {message ? <Message status={status} message={message}/> : ''}
         {status === 'downloading' ? <CircularProgress style={centerStyle} size={50}/> : ''}
-        {sortedPosts ? sortedPosts.map(post => (
-          <Post post={post} key={post.id}/>
-        )) : ''}
+        {status === 'success' ? Sorted : ''}
       </div>
     )
   }

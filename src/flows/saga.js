@@ -26,9 +26,21 @@ function* doFetchCategories(action) {
   }
 }
 
+/* Save Posts */
+function* doSavePost(action) {
+  try {
+    if (delayedRequest) yield delay(900)
+
+    const post = yield call(api.savePost, action.post)
+    yield put(actions.savePostSuccess(post))
+  } catch (e) {
+    yield put(actions.savePostFailed(e.message))
+  }
+
+}
+
 /*
-  Starts fetchPosts on each dispatched `FETCH_POSTS` action.
-  Allows concurrent fetches of posts.
+  The sagas for the async calls
 */
 function* fetchPostSaga() {
   yield takeEvery(actions.FETCH_POSTS, doFetchPosts)
@@ -38,10 +50,15 @@ function* fetchCategoriesSaga() {
   yield takeEvery(actions.FETCH_CATEGORIES, doFetchCategories)
 }
 
+function* savePostSaga() {
+  yield takeEvery(actions.EDIT_POST_SAVE, doSavePost)
+}
+
 export default function* rootSaga() {
   yield all([
     fetchPostSaga(),
     fetchCategoriesSaga(),
+    savePostSaga(),
   ])
 }
 

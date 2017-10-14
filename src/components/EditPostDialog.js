@@ -10,7 +10,7 @@ import {
 } from 'material-ui'
 import * as actions from '../flows/actions'
 import {withResponsiveFullScreen} from 'material-ui/Dialog'
-import {PostForm} from './PostForm'
+import PostForm from './PostForm'
 
 
 class EditPostDialog extends React.Component {
@@ -26,16 +26,16 @@ class EditPostDialog extends React.Component {
   }
 
   submit = () => {
-    this.form.submit()
+    const form = this.form.getWrappedInstance()
+    form.submit()
   }
-
 
   render() {
     const title = 'New Post'
     return <Dialog open={this.props.open}
                    onRequestClose={this.handleRequestClose}>
       <DialogTitle>{title}</DialogTitle>
-      <DialogContent ref="form">
+      <DialogContent>
         <DialogContentText>
           Edit a post - this project should be called Writeble
         </DialogContentText>

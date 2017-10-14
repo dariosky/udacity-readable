@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux'
 
 import {
-  CHANGE_CATEGORY, EDIT_POST, EDIT_POST_CANCEL,
+  CHANGE_CATEGORY, EDIT_POST, EDIT_POST_CANCEL, EDIT_POST_FAIL, EDIT_POST_SUCCESS,
   FETCH_CATEGORIES,
   FETCH_CATEGORIES_FAILED,
   FETCH_CATEGORIES_SUCCEEDED,
@@ -39,10 +39,25 @@ function posts(state = {}, action) {
         ...state,
         edit: post, // edit a post
       }
-    case EDIT_POST_CANCEL:
-      let {edit: deleted, ...rest} = state
-      console.debug('discarderd changes to', deleted)
+    case EDIT_POST_CANCEL: {
+      const {edit: deleted, ...rest} = state
+      console.debug('discarded changes to', deleted)
       return rest
+    }
+    case EDIT_POST_SUCCESS: {// add the post and close the edit modal
+      const {edit: deleted, ...rest} = state
+      return {
+        ...rest,
+        posts: [...state.posts, action.post],
+      }
+    }
+
+    case EDIT_POST_FAIL:
+      return {
+        ...state,
+        status: 'error',
+        message: 'Something went wrong saving the POST' + action.message,
+      }
 
     default :
       return state
