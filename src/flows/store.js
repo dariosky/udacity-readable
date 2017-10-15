@@ -13,7 +13,9 @@ const logger = store => next => action => {
 }
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+
 const sagaMiddleware = createSagaMiddleware()
+
 const store = createStore(
   reducer,
   composeEnhancers(
@@ -24,4 +26,4 @@ const store = createStore(
 
 sagaMiddleware.run(saga)
 
-export default store
+export {store}

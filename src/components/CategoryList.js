@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {changeCategory, fetchCategories, fetchPosts} from '../flows/actions'
+import {fetchCategories} from '../flows/actions'
 import {Tab, Tabs} from 'material-ui'
 import withRouter from 'react-router-dom/es/withRouter'
 import {LinearProgress} from 'material-ui/Progress'
@@ -12,18 +12,14 @@ class CategoryList extends React.Component {
 
   changeTab = (event, nextCategory) => {
     this.props.history.push(`/category/${nextCategory}`)
-    if (this.props.categories.current !== nextCategory) {
-      this.props.changeCategory(nextCategory)
-      this.props.fetchPosts(nextCategory)
-    }
   }
 
   render() {
     const {categories, status, message, current} = this.props.categories
+    if (status === 'downloading') return <LinearProgress/>
+    if (status !== 'success') return null
     return (
       <div>
-        {message ? <div className={[status, 'message']}>{message}</div> : ''}
-        {status === 'downloading' ? <LinearProgress/> : ''}
         <Tabs
           value={current || 'all'}
           indicatorColor="primary"
@@ -53,14 +49,6 @@ function mapDispatchToProps(dispatch) {
   return {
     fetchCategories: () => dispatch(
       fetchCategories() // get all the categories
-    ),
-
-    changeCategory: (nextCategory) => dispatch(
-      changeCategory(nextCategory),
-    ),
-
-    fetchPosts: (nextCategory) => dispatch(
-      fetchPosts(nextCategory),
     ),
   }
 }

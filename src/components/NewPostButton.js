@@ -1,7 +1,7 @@
 import React from 'react'
 import {Button} from 'material-ui'
 import {connect} from 'react-redux'
-import {newPostModal, savePostModal} from '../flows/actions'
+import {newPostModal} from '../flows/actions'
 
 class NewPostButton extends React.Component {
   render() {

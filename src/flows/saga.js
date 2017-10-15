@@ -26,6 +26,13 @@ function* doFetchCategories(action) {
   }
 }
 
+function* doChangeCategory(action) {
+  // load the posts when changing category
+  if (delayedRequest) yield delay(300)
+  yield put(actions.fetchPosts(action.category))
+}
+
+
 /* Save Posts */
 function* doSavePost(action) {
   try {
@@ -54,10 +61,15 @@ function* savePostSaga() {
   yield takeEvery(actions.EDIT_POST_SAVE, doSavePost)
 }
 
+function* changeCategorySaga() {
+  yield takeEvery(actions.CHANGE_CATEGORY, doChangeCategory)
+}
+
 export default function* rootSaga() {
   yield all([
     fetchPostSaga(),
     fetchCategoriesSaga(),
+    changeCategorySaga(),
     savePostSaga(),
   ])
 }

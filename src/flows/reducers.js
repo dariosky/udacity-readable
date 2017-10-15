@@ -1,13 +1,19 @@
 import {combineReducers} from 'redux'
 
 import {
-  CHANGE_CATEGORY, EDIT_POST, EDIT_POST_CANCEL, EDIT_POST_FAIL, EDIT_POST_SUCCESS,
+  CHANGE_CATEGORY,
+  EDIT_POST,
+  EDIT_POST_CANCEL,
+  EDIT_POST_FAIL,
+  EDIT_POST_SUCCESS,
   FETCH_CATEGORIES,
   FETCH_CATEGORIES_FAILED,
   FETCH_CATEGORIES_SUCCEEDED,
   FETCH_POST_SUCCEEDED,
   FETCH_POSTS,
-  FETCH_POSTS_FAILED, SORT_BY, SORT_DIRECTION,
+  FETCH_POSTS_FAILED,
+  SORT_BY,
+  SORT_DIRECTION,
 } from './actions'
 
 function posts(state = {}, action) {
@@ -16,6 +22,7 @@ function posts(state = {}, action) {
       return {
         ...state,
         status: 'downloading',
+        category: action.category,
         posts: [],
       }
     case FETCH_POSTS_FAILED:

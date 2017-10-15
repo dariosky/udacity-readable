@@ -11,6 +11,7 @@ import {withStyles} from 'material-ui/styles'
 import sortBy from 'sort-by'
 import SortBar from './SortBar'
 import Message from './Message'
+import {Link} from 'react-router-dom'
 
 const centerStyle = {
   margin: '20px auto',
@@ -37,10 +38,12 @@ function Post(props) {
 
   return <div>
     <Card className="post">
-      <CardHeader
-        title={post.title}
-        subheader={subheader(post)}
-      />
+      <Link to={`/category/${post.category}/${post.id}`}
+            style={{'color': '#333', 'textDecoration': 'none'}}>
+        <CardHeader
+          title={post.title}
+          subheader={subheader(post)}
+        /></Link>
       <CardContent>
         <StyledBadge badgeContent={post.voteScore} color="primary">
           <ThumbUp/>
@@ -51,10 +54,6 @@ function Post(props) {
 }
 
 class PostList extends React.Component {
-  componentDidMount() {
-    this.props.fetchPosts(this.props.currentCategory)
-  }
-
   render() {
     const {posts, status, message} = this.props.posts,
       {currentSort, currentSortDirection} = this.props
