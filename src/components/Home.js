@@ -15,6 +15,7 @@ class Home extends React.Component {
       stateCategory = this.props.categories.current
 
     if (stateCategory !== category) {
+      console.log(`Changing category from ${stateCategory} to ${category}`)
       this.props.changeCategory(category)
     }
   }

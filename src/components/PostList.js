@@ -34,11 +34,11 @@ export function subheader(post) {
 }
 
 function Post(props) {
-  const post = props.post
+  const {post, category} = props
 
   return <div>
     <Card className="post">
-      <Link to={`/category/${post.category}/${post.id}`}
+      <Link to={`/category/${category}/${post.id}`}
             style={{'color': '#333', 'textDecoration': 'none'}}>
         <CardHeader
           title={post.title}
@@ -65,7 +65,9 @@ class PostList extends React.Component {
       sortedPosts = posts.sort(sortBy(sortKey))
     }
     const Sorted = posts ? <div>
-      {sortedPosts.map(post => ( <Post post={post} key={post.id}/> ))}
+      {sortedPosts.map(post => ( <Post post={post}
+                                       category={this.props.currentCategory}
+                                       key={post.id}/> ))}
       <SortBar/>
     </div> : ''
 

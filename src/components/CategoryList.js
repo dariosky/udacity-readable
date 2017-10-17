@@ -15,7 +15,9 @@ class CategoryList extends React.Component {
 
   changeTab = (event, nextCategory) => {
     this.props.history.push(`/category/${nextCategory}`)
-    this.props.changeCategory(nextCategory)
+    const currentCategory = this.props.categories.current
+    if (currentCategory !== nextCategory)
+      this.props.changeCategory(nextCategory)
   }
 
   render() {
