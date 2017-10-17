@@ -1,0 +1,81 @@
+import React from 'react'
+import {connect} from 'react-redux'
+import * as actions from '../flows/actions'
+import {Card, CardHeader, CardContent, Typography} from 'material-ui'
+import {LinearProgress} from 'material-ui/Progress'
+import Message from './Message'
+import {StyledBadge, subheader} from './PostList'
+import {ThumbUp} from 'material-ui-icons'
+import CategoryList from './CategoryList'
+import NewPostButton from './NewPostButton'
+
+class PostDetail extends React.Component {
+  componentDidMount() {
+    const
+      category = this.props.match.params.category || 'all',
+      stateCategory = this.props.state.categories.current
+
+    if (stateCategory !== category)
+      this.props.changeCategory(category)
+
+    const postId = this.props.match.params.postId,
+      statePostId = this.props.state.postDetail.id
+
+    if (postId !== statePostId)
+      this.props.changePost(postId)
+  }
+
+  render() {
+    let state = this.props.state
+    const {status, posts} = state.posts
+    if (status === 'downloading') return <LinearProgress/>
+    const postId = state.postDetail.id
+    const currentPost = (posts || []).filter(post => post.id === postId)
+    if (currentPost.length === 0)
+      return <Message status="error" message="Post not found"/>
+
+    const post = currentPost[0]
+    return <div className="container">
+      <Typography align="right">
+        <NewPostButton/>
+      </Typography>
+      <CategoryList/>
+      <Card className="post">
+        <CardHeader
+          title={post.title}
+          subheader={subheader(post)}
+        />
+        <CardContent>
+          <Typography gutterBottom={true} paragraph={true}>
+            {post.body}
+          </Typography>
+
+          <StyledBadge badgeContent={post.voteScore} color="primary">
+            <ThumbUp/>
+          </StyledBadge>
+        </CardContent>
+      </Card>
+    </div>
+  }
+}
+
+function mapStateToProps(state) {
+  // subscribe to store changes - when they happen, put them in the component store
+  return {state}
+}
+
+
+function mapDispatchToProps(dispatch) {
+  return {
+    changePost: (postId) => dispatch(
+      actions.changePost(postId),
+    ),
+    changeCategory: (nextCategory) => dispatch(
+      actions.changeCategory(nextCategory),
+    ),
+  }
+}
+
+export default connect(
+  mapStateToProps, mapDispatchToProps,
+)(PostDetail)

@@ -43,7 +43,18 @@ function* doSavePost(action) {
   } catch (e) {
     yield put(actions.savePostFailed(e.message))
   }
+}
 
+/* post Details */
+function* doGetComments(action) {
+  try {
+    if (delayedRequest) yield delay(3000)
+
+    const comments = yield call(api.getComments, action.id)
+    yield put(actions.getCommentsSucceeded(comments))
+  } catch (e) {
+    yield put(actions.getCommentsFailed(e.message))
+  }
 }
 
 /*
@@ -65,12 +76,17 @@ function* changeCategorySaga() {
   yield takeEvery(actions.CHANGE_CATEGORY, doChangeCategory)
 }
 
+function* getCommentsSaga() {
+  yield takeEvery(actions.CHANGE_POST, doGetComments)
+}
+
 export default function* rootSaga() {
   yield all([
     fetchPostSaga(),
     fetchCategoriesSaga(),
     changeCategorySaga(),
     savePostSaga(),
+    getCommentsSaga(),
   ])
 }
 

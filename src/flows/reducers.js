@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux'
 
 import {
-  CHANGE_CATEGORY,
+  CHANGE_CATEGORY, CHANGE_POST,
   EDIT_POST,
   EDIT_POST_CANCEL,
   EDIT_POST_FAIL,
@@ -11,7 +11,7 @@ import {
   FETCH_CATEGORIES_SUCCEEDED,
   FETCH_POST_SUCCEEDED,
   FETCH_POSTS,
-  FETCH_POSTS_FAILED,
+  FETCH_POSTS_FAILED, GET_COMMENTS_SUCCEEDED,
   SORT_BY,
   SORT_DIRECTION,
 } from './actions'
@@ -123,8 +123,27 @@ function options(state = {
   }
 }
 
+function postDetail(state = {id: null}, action) {
+  switch (action.type) {
+    case CHANGE_POST:
+      return {
+        ...state,
+        id: action.id,
+        comments: [],
+      }
+    case GET_COMMENTS_SUCCEEDED:
+      return {
+        ...state,
+        comments: action.comments,
+      }
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   posts,
   categories,
   options,
+  postDetail,
 })

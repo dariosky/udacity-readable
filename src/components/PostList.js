@@ -26,15 +26,15 @@ const badgeStyle = theme => ({
   },
 })
 
+export const StyledBadge = withStyles(badgeStyle)(Badge)
+
+export function subheader(post) {
+  const date = new Date(post.timestamp)
+  return `by ${post.author} - ${moment(date).format("MMM Do YYYY")}`
+}
+
 function Post(props) {
-  const post = props.post,
-    date = new Date(post.timestamp)
-
-  function subheader(post) {
-    return `by ${post.author} - ${moment(date).format("MMM Do YYYY")}`
-  }
-
-  const StyledBadge = withStyles(badgeStyle)(Badge)
+  const post = props.post
 
   return <div>
     <Card className="post">

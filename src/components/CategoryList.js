@@ -9,7 +9,8 @@ import * as actions from '../flows/actions'
 
 class CategoryList extends React.Component {
   componentDidMount() {
-    this.props.fetchCategories()
+    if (this.props.categories.status !== 'success')
+      this.props.fetchCategories()
   }
 
   changeTab = (event, nextCategory) => {

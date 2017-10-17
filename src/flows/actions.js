@@ -3,7 +3,7 @@ export const FETCH_POST_SUCCEEDED = "FETCH_POST_SUCCEEDED"
 export const FETCH_POSTS_FAILED = "FETCH_POSTS_FAILED"
 
 export const FETCH_CATEGORIES = 'FETCH_CATEGORIES'
-export const FETCH_CATEGORIES_SUCCEEDED = 'FETCH_CATEGORIES_SUCEEDED'
+export const FETCH_CATEGORIES_SUCCEEDED = 'FETCH_CATEGORIES_SUCCEEDED'
 export const FETCH_CATEGORIES_FAILED = 'FETCH_CATEGORIES_FAILED'
 
 export const CHANGE_CATEGORY = 'CHANGE_CATEGORY'
@@ -17,6 +17,10 @@ export const EDIT_POST_FAIL = 'EDIT_POST_FAIL'
 export const SORT_BY = 'SORT_BY'
 export const SORT_DIRECTION = 'SORT_DIRECTION'
 
+export const CHANGE_POST = 'CHANGE_POST'
+export const GET_COMMENTS = 'GET_COMMENTS'
+export const GET_COMMENTS_SUCCEEDED = 'GET_COMMENTS_SUCCEEDED'
+export const GET_COMMENTS_FAILED = 'GET_COMMENTS_FAILED'
 
 /* posts */
 export function fetchPosts(category) {
@@ -82,4 +86,16 @@ export function savePostSuccess(post) {
 
 export function savePostFailed(message) {
   return {type: EDIT_POST_FAIL, message}
+}
+
+export function changePost(postId) {
+  return {type: CHANGE_POST, id: postId}
+}
+
+export function getCommentsSucceeded(comments) {
+  return {type: GET_COMMENTS_SUCCEEDED, comments}
+}
+
+export function getCommentsFailed(message) {
+  return {type: GET_COMMENTS_FAILED, message}
 }

@@ -6,6 +6,7 @@ import Route from 'react-router-dom/es/Route'
 import {PageNotFound} from './PageNotFound'
 import Switch from 'react-router-dom/es/Switch'
 import {Link} from 'react-router-dom'
+import PostDetail from './PostDetail'
 
 
 class App extends Component {
@@ -32,6 +33,10 @@ class App extends Component {
           <Route
             exact path="/category/:category"
             component={Home}
+          />
+          <Route
+            path="/category/:category/:postId"
+            component={PostDetail}
           />
           <Route
             component={PageNotFound}

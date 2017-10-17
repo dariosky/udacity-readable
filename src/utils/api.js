@@ -61,3 +61,7 @@ export const savePost = (post) => {
       }
     })
 }
+
+export const getComments = (postId) =>
+  fetch(`${api}/posts/${postId}/comments`, {headers})
+    .then(res => res.json())
