@@ -8,18 +8,14 @@ import {connect} from 'react-redux'
 import * as actions from '../flows/actions'
 
 class Home extends React.Component {
-  componentWillReceiveProps(nextProps) {
+  componentDidMount() {
+    // setting the state category on component mount
     const
-      currentCategory = this.props.match.params.category,
-      nextCategory = nextProps.match.params.category,
+      category = this.props.match.params.category || 'all',
       stateCategory = this.props.categories.current
 
-    if (stateCategory !== nextCategory) {
-      // TODO: Fix: action is fired twice
-      console.log("category", currentCategory, nextCategory,
-        stateCategory)
-      console.log("Changing to category", nextCategory)
-      this.props.changeCategory(nextCategory)
+    if (stateCategory !== category) {
+      this.props.changeCategory(category)
     }
   }
 

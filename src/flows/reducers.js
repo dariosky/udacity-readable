@@ -82,7 +82,8 @@ function categories(state = {}, action) {
     case FETCH_CATEGORIES_FAILED:
       return {
         ...state,
-        status: 'Cannot get posts from API, is it running? ' + action.message,
+        status: 'error',
+        message: 'Cannot talk with API, is it running? ' + action.message,
         categories: [],
       }
 
