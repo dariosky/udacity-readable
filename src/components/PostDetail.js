@@ -4,10 +4,13 @@ import * as actions from '../flows/actions'
 import {Card, CardHeader, CardContent, Typography} from 'material-ui'
 import {LinearProgress} from 'material-ui/Progress'
 import Message from './Message'
-import {StyledBadge, subheader} from './PostList'
+import {StyledBadge, subheader} from './Posts'
 import {ThumbUp} from 'material-ui-icons'
-import CategoryList from './CategoryList'
+import CategoryList from './Categories'
 import NewPostButton from './NewPostButton'
+import Divider from 'material-ui/Divider'
+import EditPostDialog from './EditPostDialog'
+import CommentList from './Comments'
 
 class PostDetail extends React.Component {
   componentDidMount() {
@@ -55,6 +58,12 @@ class PostDetail extends React.Component {
           </StyledBadge>
         </CardContent>
       </Card>
+
+      <Divider/>
+
+      <CommentList/>
+
+      <EditPostDialog/>
     </div>
   }
 }
