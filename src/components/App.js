@@ -7,8 +7,6 @@ import {PageNotFound} from './PageNotFound'
 import Switch from 'react-router-dom/es/Switch'
 import {Link} from 'react-router-dom'
 import PostDetail from './PostDetail'
-import * as actions from '../flows/actions'
-import {connect} from 'react-redux'
 
 
 class App extends Component {
@@ -19,7 +17,7 @@ class App extends Component {
           <Toolbar>
             <Link to="/"
                   onClick={e => {
-                    this.props.changeCategory('all')
+                    console.log('change to all')
                   }}
                   style={{'color': '#333', 'textDecoration': 'none'}}>
               <Typography type="title" color="inherit">
@@ -52,9 +50,4 @@ class App extends Component {
   }
 }
 
-export default connect(
-  null,
-  (dispatch) => {
-    return {changeCategory: (category) => dispatch(actions.changeCategory(category))}
-  },
-)(App)
+export default App

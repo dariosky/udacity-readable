@@ -8,14 +8,13 @@ import {connect} from 'react-redux'
 import * as actions from '../flows/actions'
 
 class Home extends React.Component {
-  componentDidMount() {
-    // setting the state category on component mount
+  componentWillReceiveProps(props) {
     const
-      category = this.props.match.params.category || 'all',
-      stateCategory = this.props.categories.current
+      category = props.match.params.category || 'all',
+      stateCategory = props.categories.current
 
     if (stateCategory !== category) {
-      console.log(`Changing category from ${stateCategory} to ${category}`)
+      // console.debug(`Willprop change category from ${stateCategory} to ${category}`)
       this.props.changeCategory(category)
     }
   }
