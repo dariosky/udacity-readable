@@ -19,6 +19,7 @@ import {
   POST_COMMENT_RESULT,
   SORT_BY,
   SORT_DIRECTION,
+  VOTE_POST_RESULT,
 } from './actions'
 
 function posts(state = {}, action) {
@@ -80,6 +81,26 @@ function posts(state = {}, action) {
         return state
       }
     }
+
+    case VOTE_POST_RESULT: {
+      const {result} = action
+      if (result.success) {
+        const rest = state.posts.filter(
+          post => post.id !== result.post.id,
+        )
+        return {
+          ...state,
+          posts: [
+            ...rest,
+            result.post,
+          ],
+        }
+      }
+      else {
+        return state
+      }
+    }
+
     default :
       return state
   }

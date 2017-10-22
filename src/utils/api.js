@@ -50,7 +50,10 @@ export const savePost = (post) => {
     }
 
   return fetch(`${api}${url}`, {
-    headers: {...headers, 'Content-Type': 'application/json'},
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json',
+    },
     method,
     body: JSON.stringify(payload),
   })
@@ -67,12 +70,18 @@ export const getComments = (postId) =>
     .then(res => res.json())
 
 export const deleteComment = (commentId) =>
-  fetch(`${api}/comments/${commentId}`, {headers, method: 'DELETE'})
+  fetch(`${api}/comments/${commentId}`, {
+    headers,
+    method: 'DELETE',
+  })
     .then(res => res.json())
 
 export const postComment = (comment) =>
   fetch(`${api}/comments`, {
-    headers: {...headers, 'Content-Type': 'application/json'},
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json',
+    },
     method: 'post',
     body: JSON.stringify({
       id: getRandomString(5),
@@ -83,5 +92,34 @@ export const postComment = (comment) =>
     .then(res => res.json())
 
 export const deletePost = (postId) =>
-  fetch(`${api}/posts/${postId}`, {headers, method: 'DELETE'})
+  fetch(`${api}/posts/${postId}`, {
+    headers,
+    method: 'DELETE',
+  })
+    .then(res => res.json())
+
+export const votePost = (postId, vote) =>
+  fetch(`${api}/posts/${postId}`, {
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json',
+    },
+    method: 'post',
+    body: JSON.stringify({
+      option: vote,
+    }),
+  })
+    .then(res => res.json())
+
+export const voteComment = (commentId, vote) =>
+  fetch(`${api}/comments/${commentId}`, {
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json',
+    },
+    method: 'post',
+    body: JSON.stringify({
+      option: vote,
+    }),
+  })
     .then(res => res.json())

@@ -31,6 +31,14 @@ export const POST_COMMENT_RESULT = 'POST_COMMENT_RESULT'
 export const POST_DELETE = 'POST_DELETE'
 export const DELETE_POST_RESULT = 'DELETE_POST_RESULT'
 
+export const VOTE_POST = 'VOTE_POST'
+export const VOTE_POST_RESULT = 'VOTE_POST_RESULT'
+
+export const VOTE_COMMENT = 'VOTE_COMMENT'
+export const VOTE_COMMENT_RESULT = 'VOTE_COMMENT_RESULT'
+export const UP_VOTE = 'upVote'
+export const DOWN_VOTE = 'downVote'
+
 /* posts */
 export function fetchPosts(category) {
   return {
@@ -135,4 +143,20 @@ export function deletePost(postId) {
 
 export function deletePostResult(result) {
   return {type: DELETE_POST_RESULT, result}
+}
+
+export function votePost(postId, vote) {
+  return {type: VOTE_POST, postId, vote}
+}
+
+export function votePostResult(result) {
+  return {type: VOTE_POST_RESULT, result}
+}
+
+export function voteComment(commentId, vote) {
+  return {type: VOTE_COMMENT, commentId, vote}
+}
+
+export function voteCommentResult(result) {
+  return {type: VOTE_COMMENT_RESULT, result}
 }

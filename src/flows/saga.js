@@ -16,7 +16,7 @@ function* doFetchPosts(action) {
   }
 }
 
-function* doFetchCategories(action) {
+function* doFetchCategories() {
   try {
     if (delayedRequest) yield delay(300)
     const categories = yield call(api.allCategories)
@@ -101,6 +101,24 @@ function* doPostDelete(action) {
   }
 }
 
+function* doPostVote(action) {
+  try {
+    if (delayedRequest) yield delay(1000)
+
+    const post = yield call(api.votePost, action.postId, action.vote)
+    yield put(actions.votePostResult({
+      success: true,
+      post,
+    }))
+  } catch (e) {
+    console.error(e)
+    yield put(actions.votePostResult({
+      success: false,
+      error: e.message,
+    }))
+  }
+}
+
 /*
   The sagas for the async calls
 */
@@ -136,6 +154,10 @@ function* postDeleteSaga() {
   yield takeEvery(actions.POST_DELETE, doPostDelete)
 }
 
+function* postVoteSaga() {
+  yield takeEvery(actions.VOTE_POST, doPostVote)
+}
+
 export default function* rootSaga() {
   yield all([
     fetchPostSaga(),
@@ -146,6 +168,8 @@ export default function* rootSaga() {
     deleteCommentSaga(),
     postCommentSaga(),
     postDeleteSaga(),
+
+    postVoteSaga(),
   ])
 }
 
