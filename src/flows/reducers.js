@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux'
 
 import {
-  CHANGE_CATEGORY, CHANGE_POST,
+  CHANGE_CATEGORY, CHANGE_POST, DELETE_COMMENT_SUCCEEDED,
   EDIT_POST,
   EDIT_POST_CANCEL,
   EDIT_POST_FAIL,
@@ -11,7 +11,7 @@ import {
   FETCH_CATEGORIES_SUCCEEDED,
   FETCH_POST_SUCCEEDED,
   FETCH_POSTS,
-  FETCH_POSTS_FAILED, GET_COMMENTS_SUCCEEDED,
+  FETCH_POSTS_FAILED, GET_COMMENTS_SUCCEEDED, POST_COMMENT_RESULT,
   SORT_BY,
   SORT_DIRECTION,
 } from './actions'
@@ -48,7 +48,6 @@ function posts(state = {}, action) {
       }
     case EDIT_POST_CANCEL: {
       const {edit: deleted, ...rest} = state
-      console.debug('discarded changes to', deleted)
       return rest
     }
     case EDIT_POST_SUCCESS: {// add the post and close the edit modal
@@ -135,6 +134,29 @@ function postDetail(state = {id: null}, action) {
       return {
         ...state,
         comments: action.comments,
+      }
+    case DELETE_COMMENT_SUCCEEDED:
+      const comments = state.comments.filter(
+        comment => comment.id !== action.comment.id,
+      )
+      return {
+        ...state,
+        comments,
+      }
+    case POST_COMMENT_RESULT:
+      console.log("result", action)
+      const {result} = action
+      if (result.success) {
+        return {
+          ...state,
+          comments: [
+            ...state.comments,
+            result.comment,
+          ],
+        }
+      }
+      else {
+        return state
       }
     default:
       return state

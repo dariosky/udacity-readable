@@ -57,6 +57,32 @@ function* doGetComments(action) {
   }
 }
 
+function* doDeleteComment(action) {
+  try {
+    if (delayedRequest) yield delay(1000)
+
+    const comment = yield call(api.deleteComment, action.id)
+    yield put(actions.deleteCommentSucceeded(comment))
+  } catch (e) {
+    yield put(actions.deleteCommentFailed(e.message))
+  }
+}
+
+function* doPostComment(action) {
+  try {
+    if (delayedRequest) yield delay(1000)
+
+    const comment = yield call(api.postComment, action.comment)
+    console.log("Wrote", comment)
+    yield put(actions.postCommentResult({success: true, comment}))
+  } catch (e) {
+    yield put(actions.postCommentResult({
+      success: false,
+      error: e.message,
+    }))
+  }
+}
+
 /*
   The sagas for the async calls
 */
@@ -80,6 +106,14 @@ function* getCommentsSaga() {
   yield takeEvery(actions.CHANGE_POST, doGetComments)
 }
 
+function* deleteCommentSaga() {
+  yield takeEvery(actions.DELETE_COMMENT, doDeleteComment)
+}
+
+function* postCommentSaga() {
+  yield takeEvery(actions.POST_COMMENT, doPostComment)
+}
+
 export default function* rootSaga() {
   yield all([
     fetchPostSaga(),
@@ -87,6 +121,8 @@ export default function* rootSaga() {
     changeCategorySaga(),
     savePostSaga(),
     getCommentsSaga(),
+    deleteCommentSaga(),
+    postCommentSaga(),
   ])
 }
 

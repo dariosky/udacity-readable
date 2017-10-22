@@ -1,16 +1,16 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import * as actions from '../flows/actions'
-import {Card, CardHeader, CardContent, Typography} from 'material-ui'
+import {Card, CardContent, CardHeader, Typography} from 'material-ui'
 import {LinearProgress} from 'material-ui/Progress'
 import Message from './Message'
 import {StyledBadge, subheader} from './Posts'
 import {ThumbUp} from 'material-ui-icons'
 import CategoryList from './Categories'
 import NewPostButton from './NewPostButton'
-import Divider from 'material-ui/Divider'
 import EditPostDialog from './EditPostDialog'
 import CommentList from './Comments'
+import CommentForm from './CommentForm'
 
 class PostDetail extends React.Component {
   componentDidMount() {
@@ -59,7 +59,7 @@ class PostDetail extends React.Component {
         </CardContent>
       </Card>
 
-      <Divider/>
+      <CommentForm/>
 
       <CommentList/>
 

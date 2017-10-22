@@ -1,11 +1,10 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import * as actions from '../flows/actions'
 import {fetchCategories} from '../flows/actions'
 import {Tab, Tabs} from 'material-ui'
 import withRouter from 'react-router-dom/es/withRouter'
 import {LinearProgress} from 'material-ui/Progress'
-import Message from './Message'
-import * as actions from '../flows/actions'
 
 class CategoryList extends React.Component {
   componentDidMount() {
@@ -22,7 +21,11 @@ class CategoryList extends React.Component {
 
   render() {
     const {categories, status, message, current} = this.props.categories
-    if (message) return <Message status={status} message={message}/>
+    if (message) return null
+    /* We don't show the message for categories,
+       it'd be:
+       <Message status={status} message={message}/>
+    */
     if (status === 'downloading') return <LinearProgress/>
     if (status !== 'success') return null
     return (

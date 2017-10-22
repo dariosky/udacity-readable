@@ -65,3 +65,19 @@ export const savePost = (post) => {
 export const getComments = (postId) =>
   fetch(`${api}/posts/${postId}/comments`, {headers})
     .then(res => res.json())
+
+export const deleteComment = (commentId) =>
+  fetch(`${api}/comments/${commentId}`, {headers, method: 'DELETE'})
+    .then(res => res.json())
+
+export const postComment = (comment) =>
+  fetch(`${api}/comments`, {
+    headers: {...headers, 'Content-Type': 'application/json'},
+    method: 'post',
+    body: JSON.stringify({
+      id: getRandomString(5),
+      timestamp: Date.now(),
+      ...comment
+    }),
+  })
+    .then(res => res.json())

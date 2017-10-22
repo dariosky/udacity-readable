@@ -10,7 +10,8 @@ class Message extends React.Component {
     const {status, message} = this.props
     return <Paper elevation={4}>
       <Typography style={style} className={`message ${status}`}
-                  type="headline" component="h3">
+                  type={this.props.type || 'headline'}
+                  component={this.props.component || 'h3'}>
         {message}
       </Typography>
     </Paper>

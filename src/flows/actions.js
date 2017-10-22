@@ -18,9 +18,15 @@ export const SORT_BY = 'SORT_BY'
 export const SORT_DIRECTION = 'SORT_DIRECTION'
 
 export const CHANGE_POST = 'CHANGE_POST'
-export const GET_COMMENTS = 'GET_COMMENTS'
 export const GET_COMMENTS_SUCCEEDED = 'GET_COMMENTS_SUCCEEDED'
 export const GET_COMMENTS_FAILED = 'GET_COMMENTS_FAILED'
+
+export const DELETE_COMMENT = 'DELETE_COMMENT'
+export const DELETE_COMMENT_SUCCEEDED = 'DELETE_COMMENT_SUCCEEDED'
+export const DELETE_COMMENT_FAILED = 'DELETE_COMMENT_FAILED'
+
+export const POST_COMMENT = 'POST_COMMENT'
+export const POST_COMMENT_RESULT = 'POST_COMMENT_RESULT'
 
 /* posts */
 export function fetchPosts(category) {
@@ -98,4 +104,24 @@ export function getCommentsSucceeded(comments) {
 
 export function getCommentsFailed(message) {
   return {type: GET_COMMENTS_FAILED, message}
+}
+
+export function deleteComment(id) {
+  return {type: DELETE_COMMENT, id}
+}
+
+export function deleteCommentSucceeded(comment) {
+  return {type: DELETE_COMMENT_SUCCEEDED, comment}
+}
+
+export function deleteCommentFailed(message) {
+  return {type: DELETE_COMMENT_FAILED, message}
+}
+
+export function postComment(comment) {
+  return {type: POST_COMMENT, comment}
+}
+
+export function postCommentResult(result) {
+  return {type: POST_COMMENT_RESULT, result}
 }
