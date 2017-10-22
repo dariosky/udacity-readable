@@ -28,6 +28,9 @@ export const DELETE_COMMENT_FAILED = 'DELETE_COMMENT_FAILED'
 export const POST_COMMENT = 'POST_COMMENT'
 export const POST_COMMENT_RESULT = 'POST_COMMENT_RESULT'
 
+export const POST_DELETE = 'POST_DELETE'
+export const DELETE_POST_RESULT = 'DELETE_POST_RESULT'
+
 /* posts */
 export function fetchPosts(category) {
   return {
@@ -124,4 +127,12 @@ export function postComment(comment) {
 
 export function postCommentResult(result) {
   return {type: POST_COMMENT_RESULT, result}
+}
+
+export function deletePost(postId) {
+  return {type: POST_DELETE, postId}
+}
+
+export function deletePostResult(result) {
+  return {type: DELETE_POST_RESULT, result}
 }

@@ -1,7 +1,10 @@
 import {combineReducers} from 'redux'
 
 import {
-  CHANGE_CATEGORY, CHANGE_POST, DELETE_COMMENT_SUCCEEDED,
+  CHANGE_CATEGORY,
+  CHANGE_POST,
+  DELETE_COMMENT_SUCCEEDED,
+  DELETE_POST_RESULT,
   EDIT_POST,
   EDIT_POST_CANCEL,
   EDIT_POST_FAIL,
@@ -11,7 +14,9 @@ import {
   FETCH_CATEGORIES_SUCCEEDED,
   FETCH_POST_SUCCEEDED,
   FETCH_POSTS,
-  FETCH_POSTS_FAILED, GET_COMMENTS_SUCCEEDED, POST_COMMENT_RESULT,
+  FETCH_POSTS_FAILED,
+  GET_COMMENTS_SUCCEEDED,
+  POST_COMMENT_RESULT,
   SORT_BY,
   SORT_DIRECTION,
 } from './actions'
@@ -65,6 +70,16 @@ function posts(state = {}, action) {
         message: 'Something went wrong saving the POST' + action.message,
       }
 
+    case DELETE_POST_RESULT: {
+      const {result} = action
+      if (result.success) return {
+        ...state,
+        posts: state.posts.filter(post => post.id !== result.post.id),
+      }
+      else {
+        return state
+      }
+    }
     default :
       return state
   }
@@ -130,6 +145,16 @@ function postDetail(state = {id: null}, action) {
         id: action.id,
         comments: [],
       }
+    case DELETE_POST_RESULT: {
+      const {result} = action
+      if (result.success && result.post.id === state.id) return {
+        ...state,
+        id: null,
+      }
+      else {
+        return state
+      }
+    }
     case GET_COMMENTS_SUCCEEDED:
       return {
         ...state,
@@ -143,8 +168,7 @@ function postDetail(state = {id: null}, action) {
         ...state,
         comments,
       }
-    case POST_COMMENT_RESULT:
-      console.log("result", action)
+    case POST_COMMENT_RESULT: {
       const {result} = action
       if (result.success) {
         return {
@@ -158,6 +182,7 @@ function postDetail(state = {id: null}, action) {
       else {
         return state
       }
+    }
     default:
       return state
   }

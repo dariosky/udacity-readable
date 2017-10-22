@@ -83,6 +83,24 @@ function* doPostComment(action) {
   }
 }
 
+function* doPostDelete(action) {
+  try {
+    if (delayedRequest) yield delay(1000)
+
+    const post = yield call(api.deletePost, action.postId)
+    console.log("deleted", post)
+    yield put(actions.deletePostResult({
+      success: true,
+      post,
+    }))
+  } catch (e) {
+    yield put(actions.deletePostResult({
+      success: false,
+      error: e.message,
+    }))
+  }
+}
+
 /*
   The sagas for the async calls
 */
@@ -114,6 +132,10 @@ function* postCommentSaga() {
   yield takeEvery(actions.POST_COMMENT, doPostComment)
 }
 
+function* postDeleteSaga() {
+  yield takeEvery(actions.POST_DELETE, doPostDelete)
+}
+
 export default function* rootSaga() {
   yield all([
     fetchPostSaga(),
@@ -123,6 +145,7 @@ export default function* rootSaga() {
     getCommentsSaga(),
     deleteCommentSaga(),
     postCommentSaga(),
+    postDeleteSaga(),
   ])
 }
 

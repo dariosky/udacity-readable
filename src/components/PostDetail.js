@@ -1,16 +1,17 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import * as actions from '../flows/actions'
-import {Card, CardContent, CardHeader, Typography} from 'material-ui'
-import {LinearProgress} from 'material-ui/Progress'
+import {Button, Card, CardContent, CardHeader, LinearProgress, Typography,} from 'material-ui'
 import Message from './Message'
-import {StyledBadge, subheader} from './Posts'
-import {ThumbUp} from 'material-ui-icons'
+import {subheader} from './Posts'
 import CategoryList from './Categories'
 import NewPostButton from './NewPostButton'
 import EditPostDialog from './EditPostDialog'
 import CommentList from './Comments'
 import CommentForm from './CommentForm'
+import PostVotes from './PostVotes'
+import DeleteIcon from 'material-ui-icons/Delete'
+import withRouter from 'react-router-dom/es/withRouter'
 
 class PostDetail extends React.Component {
   componentDidMount() {
@@ -28,16 +29,33 @@ class PostDetail extends React.Component {
       this.props.changePost(postId)
   }
 
-  render() {
+  handleDelete = () => {
+    const postDetail = this.props.state.postDetail
+    this.props.deletePost(postDetail.id)
+    const post = this.getCurrentPost(),
+      history = this.props.history
+
+    history.push(`/category/${post.category}`)
+  }
+
+  getCurrentPost = () => {
     let state = this.props.state
-    const {status, posts} = state.posts
-    if (status === 'downloading') return <LinearProgress/>
     const postId = state.postDetail.id
+    const {posts} = state.posts
     const currentPost = (posts || []).filter(post => post.id === postId)
     if (currentPost.length === 0)
-      return <Message status="error" message="Post not found"/>
+      return null
 
-    const post = currentPost[0]
+    return currentPost[0]
+  }
+
+  render() {
+    let state = this.props.state
+    const {status} = state.posts
+    if (status === 'downloading') return <LinearProgress/>
+    const post = this.getCurrentPost()
+    if (!post) return <Message status="error" message="Post not found"/>
+
     return <div className="container">
       <CategoryList/>
       <Card className="post">
@@ -50,9 +68,17 @@ class PostDetail extends React.Component {
             {post.body}
           </Typography>
 
-          <StyledBadge badgeContent={post.voteScore} color="primary">
-            <ThumbUp/>
-          </StyledBadge>
+          <PostVotes post={post}/>
+
+          <Button fab
+                  aria-label="Delete"
+                  style={{
+                    position: "absolute",
+                    right: 60,
+                  }}
+                  onClick={this.handleDelete}>
+            <DeleteIcon style={{color: "tomato"}}/>
+          </Button>
         </CardContent>
       </Card>
 
@@ -84,9 +110,12 @@ function mapDispatchToProps(dispatch) {
     changeCategory: (nextCategory) => dispatch(
       actions.changeCategory(nextCategory),
     ),
+    deletePost: (postId) => dispatch(
+      actions.deletePost(postId),
+    ),
   }
 }
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps, mapDispatchToProps,
-)(PostDetail)
+)(PostDetail))

@@ -81,3 +81,7 @@ export const postComment = (comment) =>
     }),
   })
     .then(res => res.json())
+
+export const deletePost = (postId) =>
+  fetch(`${api}/posts/${postId}`, {headers, method: 'DELETE'})
+    .then(res => res.json())

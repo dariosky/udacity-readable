@@ -5,13 +5,13 @@ import Card, {CardHeader} from 'material-ui/Card'
 import moment from 'moment'
 import {CircularProgress} from 'material-ui/Progress'
 import Badge from 'material-ui/Badge'
-import ThumbUp from 'material-ui-icons/ThumbUp'
-import {CardContent} from 'material-ui'
+import {CardContent, Chip} from 'material-ui'
 import {withStyles} from 'material-ui/styles'
 import sortBy from 'sort-by'
 import SortBar from './SortBar'
 import Message from './Message'
 import {Link} from 'react-router-dom'
+import PostVotes from './PostVotes'
 
 const centerStyle = {
   margin: '20px auto',
@@ -41,13 +41,13 @@ function Post(props) {
       <Link to={`/category/${category}/${post.id}`}
             style={{'color': '#333', 'textDecoration': 'none'}}>
         <CardHeader
+          style={{paddingBottom: 0}}
           title={post.title}
-          subheader={subheader(post)}
-        /></Link>
-      <CardContent>
-        <StyledBadge badgeContent={post.voteScore} color="primary">
-          <ThumbUp/>
-        </StyledBadge>
+          subheader={[subheader(post), <Chip key="cat" label={post.category}/>]}
+        />
+      </Link>
+      <CardContent style={{padding: "0 0 10px 0"}}>
+        <PostVotes post={post}/>
       </CardContent>
     </Card>
   </div>
@@ -57,13 +57,19 @@ class PostList extends React.Component {
   render() {
     const {posts, status, message} = this.props.posts,
       {currentSort, currentSortDirection} = this.props
-    let sortedPosts = []
-    if (posts) {
-      // sort the posts
-      const sortField = currentSort === 'date' ? 'timestamp' : 'voteScore'
-      const sortKey = (currentSortDirection === 'desc' ? '-' : '') + sortField
-      sortedPosts = posts.sort(sortBy(sortKey))
-    }
+    if (status === 'downloading')
+      return <CircularProgress style={centerStyle} size={50}/>
+    if (message)
+      return <Message status={status} message={message}/>
+    if (!posts) return null
+
+    // sort the posts
+    const sortField = currentSort === 'date' ? 'timestamp' : 'voteScore'
+    const sortKey = (currentSortDirection === 'desc' ? '-' : '') + sortField
+    const sortedPosts = posts.sort(sortBy(sortKey))
+    if (!posts.length)
+      return <Message status="ok" message="There are no posts, create one"/>
+
     const Sorted = posts ? <div>
       {sortedPosts.map(post => ( <Post post={post}
                                        category={this.props.currentCategory}
@@ -73,8 +79,6 @@ class PostList extends React.Component {
 
     return (
       <div>
-        {message ? <Message status={status} message={message}/> : ''}
-        {status === 'downloading' ? <CircularProgress style={centerStyle} size={50}/> : ''}
         {status === 'success' ? Sorted : ''}
       </div>
     )
