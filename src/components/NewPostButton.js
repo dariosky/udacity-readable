@@ -20,7 +20,7 @@ class NewPostButton extends React.Component {
       author: "",
       body: "",
       title: "",
-      category: "",
+      category: this.props.currentCategory, // new post with current
     }
     this.props.newPostOpen(post)
   }
@@ -38,6 +38,12 @@ class NewPostButton extends React.Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    currentCategory: state.categories.current,
+  }
+}
+
 function mapDispatchToProps(dispatch) {
   return {
     newPostOpen: (post) => {
@@ -47,6 +53,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 )(NewPostButton)
