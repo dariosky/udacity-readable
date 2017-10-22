@@ -27,4 +27,20 @@ come paginated, so a different category page will need a new API call.
 In the `saga.js` we can enable `delayedRequest` to test
 delays on the API calls, and see the async sagas at work.
 
+From the post-list page we can add a post,
+while from the post detail we can see body, comments and edit the
+post via a similar button.
 
+All of the application state is kept in redux:
+I used 4 reducers:
+
+* posts: keep the list of posts in the current tab
+* categories: is queried once to get the available categories
+	and keep state of the current once
+* options: for the application preferences, currently just the sort order
+* postDetail: the state for an eventual post detail,
+	here we keep the open postId and its comments
+
+For convenience the application is also hosted 
+in http://readable.netlify.com/
+(but it works with your server API on your localhost)
