@@ -54,24 +54,26 @@ class PostForm extends React.Component {
   }
 
   render() {
-    const {post} = this.state
+    const {post} = this.state,
+      editing = post && post.id
 
     return <ValidatorForm
       ref="form"
       onSubmit={this.handleSubmit}
     >
-      <TextValidator
-        name="author"
-        label="Author"
-        type="text"
-        autoFocus
-        required
-        validators={['required']}
-        errorMessages={['this field is required']}
-        fullWidth
-        onChange={this.handleChange}
-        value={post.author}
-      />
+      {editing ? null :
+        <TextValidator
+          name="author"
+          label="Author"
+          type="text"
+          autoFocus
+          required
+          validators={['required']}
+          errorMessages={['this field is required']}
+          fullWidth
+          onChange={this.handleChange}
+          value={post.author}
+        />}
 
       <TextValidator
         name="title"
@@ -98,23 +100,25 @@ class PostForm extends React.Component {
         onChange={this.handleChange}
         value={post.body}
       />
-      <FormControl
-        margin="dense"
-        fullWidth>
-        <InputLabel htmlFor="category">Category</InputLabel>
-        <Select
-          name="category"
-          required
-          /*validators={['required']}
-          errorMessages={['this field is required']}*/
-          fullWidth
-          onChange={this.handleSelectChange.bind(null, "category")}
-          input={<Input id="category"/>}
-          value={post.category}
-        >
-          {this.categoryItems()}
-        </Select>
-      </FormControl>
+
+      {editing ? null :
+        <FormControl
+          margin="dense"
+          fullWidth>
+          <InputLabel htmlFor="category">Category</InputLabel>
+          <Select
+            name="category"
+            required
+            /*validators={['required']}
+            errorMessages={['this field is required']}*/
+            fullWidth
+            onChange={this.handleSelectChange.bind(null, "category")}
+            input={<Input id="category"/>}
+            value={post.category}
+          >
+            {this.categoryItems()}
+          </Select>
+        </FormControl>}
 
     </ValidatorForm>
   }

@@ -38,7 +38,7 @@ class EditPostDialog extends React.Component {
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          Edit a post - this project should be called Writeble
+          this project should be called Writeble
         </DialogContentText>
         <PostForm
           ref={(node) => {
