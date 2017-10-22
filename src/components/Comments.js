@@ -20,9 +20,13 @@ function subheader(comment) {
 
 class Comment extends React.Component {
   voteUp = () => {
+    const {comment} = this.props
+    this.props.voteComment(comment.id, actions.UP_VOTE)
   }
 
   voteDown = () => {
+    const {comment} = this.props
+    this.props.voteComment(comment.id, actions.DOWN_VOTE)
   }
 
   render() {
@@ -52,10 +56,9 @@ class Comment extends React.Component {
 
 Comment = connect(
   null,
-  dispatch => {
-    return {
-      deleteComment: id => dispatch(actions.deleteComment(id)),
-    }
+  {
+    deleteComment: actions.deleteComment,
+    voteComment: actions.voteComment,
   },
 )(Comment) // connect it
 
@@ -84,15 +87,6 @@ function mapStateToProps(state) {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    fetchPosts: () => dispatch(
-      actions.fetchPosts() // get all the posts
-    ),
-  }
-}
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
 )(CommentList)

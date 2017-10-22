@@ -119,6 +119,25 @@ function* doPostVote(action) {
   }
 }
 
+function* doCommentVote(action) {
+  try {
+    if (delayedRequest) yield delay(1000)
+
+    const comment = yield call(api.voteComment, action.commentId, action.vote)
+    yield put(actions.voteCommentResult({
+      success: true,
+      comment,
+    }))
+  } catch (e) {
+    console.error(e)
+    yield put(actions.voteCommentResult({
+      success: false,
+      error: e.message,
+    }))
+  }
+}
+
+
 /*
   The sagas for the async calls
 */
@@ -158,6 +177,10 @@ function* postVoteSaga() {
   yield takeEvery(actions.VOTE_POST, doPostVote)
 }
 
+function* commentVoteSaga() {
+  yield takeEvery(actions.VOTE_COMMENT, doCommentVote)
+}
+
 export default function* rootSaga() {
   yield all([
     fetchPostSaga(),
@@ -170,6 +193,7 @@ export default function* rootSaga() {
     postDeleteSaga(),
 
     postVoteSaga(),
+    commentVoteSaga(),
   ])
 }
 

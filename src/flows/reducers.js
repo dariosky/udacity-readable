@@ -18,7 +18,7 @@ import {
   GET_COMMENTS_SUCCEEDED,
   POST_COMMENT_RESULT,
   SORT_BY,
-  SORT_DIRECTION,
+  SORT_DIRECTION, VOTE_COMMENT_RESULT,
   VOTE_POST_RESULT,
 } from './actions'
 
@@ -204,6 +204,26 @@ function postDetail(state = {id: null}, action) {
         return state
       }
     }
+
+    case VOTE_COMMENT_RESULT: {
+      const {result} = action
+      if (result.success) {
+        const rest = state.comments.filter(
+          comment => comment.id !== result.comment.id,
+        )
+        return {
+          ...state,
+          comments: [
+            ...rest,
+            result.comment,
+          ],
+        }
+      }
+      else {
+        return state
+      }
+    }
+
     default:
       return state
   }
