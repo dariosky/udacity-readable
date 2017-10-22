@@ -31,7 +31,8 @@ class EditPostDialog extends React.Component {
   }
 
   render() {
-    const title = 'New Post'
+    const {post} = this.props
+    const title = post && post.id ? 'Edit Post' : 'New Post'
     return <Dialog open={this.props.open}
                    onRequestClose={this.handleRequestClose}>
       <DialogTitle>{title}</DialogTitle>
@@ -43,6 +44,7 @@ class EditPostDialog extends React.Component {
           ref={(node) => {
             this.form = node
           }}
+          post={post}
           onSubmit={this.handleSave}
         />
 

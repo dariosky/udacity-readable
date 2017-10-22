@@ -24,6 +24,7 @@ class Home extends React.Component {
       <Typography align="right">
         <NewPostButton/>
       </Typography>
+
       <CategoryList/>
       <PostList/>
       <EditPostDialog/>

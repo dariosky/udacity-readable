@@ -5,15 +5,11 @@ import {FormControl, Input, InputLabel, MenuItem, Select} from 'material-ui'
 import {connect} from 'react-redux'
 
 class PostForm extends React.Component {
-  constructor() {
+  constructor(props) {
     super()
+    const {post} = props
     this.state = {
-      post: {
-        author: "",
-        body: "",
-        title: "",
-        category: "",
-      },
+      post,
     }
   }
 

@@ -39,9 +39,6 @@ class PostDetail extends React.Component {
 
     const post = currentPost[0]
     return <div className="container">
-      <Typography align="right">
-        <NewPostButton/>
-      </Typography>
       <CategoryList/>
       <Card className="post">
         <CardHeader
@@ -64,6 +61,11 @@ class PostDetail extends React.Component {
       <CommentList/>
 
       <EditPostDialog/>
+
+      <Typography align="right">
+        <NewPostButton post={post}/>
+      </Typography>
+
     </div>
   }
 }

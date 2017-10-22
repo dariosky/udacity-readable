@@ -37,7 +37,7 @@ export const allCategories = () =>
 
 export const savePost = (post) => {
   const isNew = !post.id,
-    url = isNew ? '/posts' : `posts/${post.id}`,
+    url = isNew ? '/posts' : `/posts/${post.id}`,
     method = isNew ? 'post' : 'put'
   const payload = isNew ? {
       id: getRandomString(5),

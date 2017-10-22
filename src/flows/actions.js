@@ -74,8 +74,8 @@ export function sortDirection(direction) {
 }
 
 /* Posts details */
-export function newPostModal() {
-  return {type: EDIT_POST, post: {}}
+export function newPostModal(post) {
+  return {type: EDIT_POST, post}
 }
 
 export function cancelPostModal() {
