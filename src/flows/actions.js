@@ -39,6 +39,9 @@ export const VOTE_COMMENT_RESULT = 'VOTE_COMMENT_RESULT'
 export const UP_VOTE = 'upVote'
 export const DOWN_VOTE = 'downVote'
 
+export const EDIT_COMMENT = 'EDIT_COMMENT'
+export const EDIT_COMMENT_RESULT = 'EDIT_COMMENT_RESULT'
+
 /* posts */
 export function fetchPosts(category) {
   return {
@@ -159,4 +162,12 @@ export function voteComment(commentId, vote) {
 
 export function voteCommentResult(result) {
   return {type: VOTE_COMMENT_RESULT, result}
+}
+
+export function editComment(commentId, body) {
+  return {type: EDIT_COMMENT, commentId, body}
+}
+
+export function editCommentResult(result) {
+  return {type: EDIT_COMMENT_RESULT, result}
 }

@@ -4,7 +4,7 @@ import {
   CHANGE_CATEGORY,
   CHANGE_POST,
   DELETE_COMMENT_SUCCEEDED,
-  DELETE_POST_RESULT,
+  DELETE_POST_RESULT, EDIT_COMMENT_RESULT,
   EDIT_POST,
   EDIT_POST_CANCEL,
   EDIT_POST_FAIL,
@@ -206,6 +206,25 @@ function postDetail(state = {id: null}, action) {
     }
 
     case VOTE_COMMENT_RESULT: {
+      const {result} = action
+      if (result.success) {
+        const rest = state.comments.filter(
+          comment => comment.id !== result.comment.id,
+        )
+        return {
+          ...state,
+          comments: [
+            ...rest,
+            result.comment,
+          ],
+        }
+      }
+      else {
+        return state
+      }
+    }
+
+    case EDIT_COMMENT_RESULT:{
       const {result} = action
       if (result.success) {
         const rest = state.comments.filter(

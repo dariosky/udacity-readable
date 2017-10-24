@@ -18,10 +18,14 @@ class CommentForm extends React.Component {
       parentId: this.props.postId,
       author, body,
     })
+    this.setState({ //reset the state
+      author: "",
+      body: "",
+    })
   }
 
   render() {
-    const {author, comment} = this.state
+    const {author, body} = this.state
     return <Card style={{margin: "15px 0"}}>
       <CardContent>
         <Typography type="body1">
@@ -42,7 +46,7 @@ class CommentForm extends React.Component {
             id="body"
             name="body"
             label="Comment"
-            value={comment}
+            value={body}
             onChange={this.handleChange}
             margin="normal"
             fullWidth
