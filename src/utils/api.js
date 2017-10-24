@@ -3,9 +3,9 @@ const api = "http://localhost:3001"
 
 // Generate a unique token for authenticating with the backend server.
 let token = localStorage.token
-let getRandomString = function (length) {
-  return Math.random().toString(36).substr(-length)
-}
+const getRandomString = length =>
+  Math.random().toString(36).substr(-length)
+const getId = () => getRandomString(15)
 
 if (!token)
   token = localStorage.token = getRandomString(8)
@@ -40,7 +40,7 @@ export const savePost = (post) => {
     url = isNew ? '/posts' : `/posts/${post.id}`,
     method = isNew ? 'post' : 'put'
   const payload = isNew ? {
-      id: getRandomString(5),
+      id: getId(),
       timestamp: Date.now(),
       ...post// give the whole post for creation
     } :
@@ -84,7 +84,7 @@ export const postComment = (comment) =>
     },
     method: 'post',
     body: JSON.stringify({
-      id: getRandomString(5),
+      id: getId(),
       timestamp: Date.now(),
       ...comment
     }),
@@ -120,6 +120,20 @@ export const voteComment = (commentId, vote) =>
     method: 'post',
     body: JSON.stringify({
       option: vote,
+    }),
+  })
+    .then(res => res.json())
+
+export const editComment = (commentId, body) =>
+  fetch(`${api}/comments/${commentId}`, {
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json',
+    },
+    method: 'put',
+    body: JSON.stringify({
+      timestamp: Date.now(),
+      body,
     }),
   })
     .then(res => res.json())

@@ -5,6 +5,12 @@ import ThumbUp from 'material-ui-icons/ThumbUp'
 import ThumbDown from 'material-ui-icons/ThumbDown'
 import * as actions from '../flows/actions'
 
+const centerStyle = {
+  minHeight: "36px",
+  display: "inline-block",
+  padding: "11px 5px",
+  verticalAlign: "top",
+}
 
 class PostVotes extends React.Component {
   render() {
@@ -16,12 +22,7 @@ class PostVotes extends React.Component {
       <Button onClick={() => this.props.votePost(
         post.id, actions.DOWN_VOTE,
       )}><ThumbDown/></Button>
-      <span style={{
-        minHeight: "36px",
-        display: "inline-block",
-        padding: "11px 5px",
-        verticalAlign: "top",
-      }}>{post.voteScore} votes</span>
+      <span style={centerStyle}>{post.voteScore} votes</span>
     </div>
   }
 }

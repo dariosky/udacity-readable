@@ -17,6 +17,25 @@ Using [React-Router](https://github.com/ReactTraining/react-router)
  for routing, [Redux-Saga](https://github.com/redux-saga/redux-saga)
  for dealing with async API calls. 
 
+### How to run it
+1. Clone and run the API server:
+
+	Instructions here:
+		https://github.com/udacity/reactnd-project-readable-starter
+
+2. Clone this app
+
+	```
+	git clone git@github.com:dariosky/udacity-readable.git
+	cd udacity-readable
+	```
+3. Run it like the usual create-react-app applications:
+
+	```
+	npm install
+	npm start
+	```
+	 
 ### Notes
 
 When fetching the list of posts per category, I'm doing an API call when changing the category:

@@ -4,9 +4,7 @@ import * as actions from '../flows/actions'
 import Card, {CardHeader} from 'material-ui/Card'
 import moment from 'moment'
 import {CircularProgress} from 'material-ui/Progress'
-import Badge from 'material-ui/Badge'
 import {CardContent, Chip} from 'material-ui'
-import {withStyles} from 'material-ui/styles'
 import sortBy from 'sort-by'
 import SortBar from './SortBar'
 import Message from './Message'
@@ -18,15 +16,6 @@ const centerStyle = {
   width: '50px',
   display: 'block',
 }
-
-const badgeStyle = theme => ({
-  badge: {
-    top: 0,
-    right: "-24px",
-  },
-})
-
-export const StyledBadge = withStyles(badgeStyle)(Badge)
 
 export function subheader(post) {
   const date = new Date(post.timestamp)
