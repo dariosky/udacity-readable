@@ -1,7 +1,7 @@
 import React from 'react'
 import {Button} from 'material-ui'
 import {connect} from 'react-redux'
-import {newPostModal} from '../flows/actions'
+import * as actions from '../flows/actions'
 import AddIcon from 'material-ui-icons/Add'
 import ModeEditIcon from 'material-ui-icons/ModeEdit'
 
@@ -22,7 +22,7 @@ class NewPostButton extends React.Component {
       title: "",
       category: this.props.currentCategory, // new post with current
     }
-    this.props.newPostOpen(post)
+    this.props.newPostModal(post)
   }
 
   render() {
@@ -44,15 +44,7 @@ const mapStateToProps = state => {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    newPostOpen: (post) => {
-      dispatch(newPostModal(post))
-    },
-  }
-}
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  {newPostModal: actions.newPostModal},
 )(NewPostButton)

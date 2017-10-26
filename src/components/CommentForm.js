@@ -63,15 +63,9 @@ class CommentForm extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return {postId: state.postDetail.id}
+  return {postId: state.comments.id}
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    postComment: (comment) => dispatch(
-      actions.postComment(comment),
-    ),
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CommentForm)
+export default connect(
+  mapStateToProps,
+  {postComment: actions.postComment})(CommentForm)

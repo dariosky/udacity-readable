@@ -9,7 +9,7 @@ import NewPostButton from './NewPostButton'
 import EditPostDialog from './EditPostDialog'
 import CommentList from './Comments'
 import CommentForm from './CommentForm'
-import PostVotes from './PostVotes'
+import PostSubBar from './PostSubBar'
 import DeleteIcon from 'material-ui-icons/Delete'
 import withRouter from 'react-router-dom/es/withRouter'
 
@@ -23,15 +23,17 @@ class PostDetail extends React.Component {
       this.props.changeCategory(category)
 
     const postId = this.props.match.params.postId,
-      statePostId = this.props.state.postDetail.id
+      statePostId = this.props.state.comments.id
 
     if (postId !== statePostId)
       this.props.changePost(postId)
+    if (!this.props.state.comments[postId])
+      this.props.getPostComments(postId)
   }
 
   handleDelete = () => {
-    const postDetail = this.props.state.postDetail
-    this.props.deletePost(postDetail.id)
+    const currentPostId = this.props.state.comments.id
+    this.props.deletePost(currentPostId)
     const post = this.getCurrentPost(),
       history = this.props.history
 
@@ -40,7 +42,7 @@ class PostDetail extends React.Component {
 
   getCurrentPost = () => {
     let state = this.props.state
-    const postId = state.postDetail.id
+    const postId = state.comments.id
     const {posts} = state.posts
     const currentPost = (posts || []).filter(post => post.id === postId)
     if (currentPost.length === 0)
@@ -68,7 +70,7 @@ class PostDetail extends React.Component {
             {post.body}
           </Typography>
 
-          <PostVotes post={post}/>
+          <PostSubBar post={post}/>
 
           <Button fab
                   aria-label="Delete"
@@ -96,26 +98,14 @@ class PostDetail extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
-  // subscribe to store changes - when they happen, put them in the component store
-  return {state}
-}
-
-
-function mapDispatchToProps(dispatch) {
-  return {
-    changePost: (postId) => dispatch(
-      actions.changePost(postId),
-    ),
-    changeCategory: (nextCategory) => dispatch(
-      actions.changeCategory(nextCategory),
-    ),
-    deletePost: (postId) => dispatch(
-      actions.deletePost(postId),
-    ),
-  }
-}
-
 export default withRouter(connect(
-  mapStateToProps, mapDispatchToProps,
+  state => {
+    return {state}
+  },
+  {
+    changePost: actions.changePost,
+    changeCategory: actions.changeCategory,
+    deletePost: actions.deletePost,
+    getPostComments: actions.getPostComments,
+  },
 )(PostDetail))

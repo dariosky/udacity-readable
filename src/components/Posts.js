@@ -9,7 +9,7 @@ import sortBy from 'sort-by'
 import SortBar from './SortBar'
 import Message from './Message'
 import {Link} from 'react-router-dom'
-import PostVotes from './PostVotes'
+import PostSubBar from './PostSubBar'
 
 const centerStyle = {
   margin: '20px auto',
@@ -22,25 +22,43 @@ export function subheader(post) {
   return `by ${post.author} - ${moment(date).format("MMM Do YYYY")}`
 }
 
-function Post(props) {
-  const {post, category} = props
+class Post extends React.Component {
+  componentDidMount() {
+    const {post, getPostComments, state} = this.props
 
-  return <div>
-    <Card className="post">
-      <Link to={`/category/${category}/${post.id}`}
-            style={{'color': '#333', 'textDecoration': 'none'}}>
-        <CardHeader
-          style={{paddingBottom: 0}}
-          title={post.title}
-          subheader={[subheader(post), <Chip key="cat" label={post.category}/>]}
-        />
-      </Link>
-      <CardContent style={{padding: "0 0 10px 0"}}>
-        <PostVotes post={post}/>
-      </CardContent>
-    </Card>
-  </div>
+    if (!state.comments[post.id]) {
+      getPostComments(post.id)
+    }
+  }
+
+  render() {
+    const {post, category} = this.props
+
+    return <div>
+      <Card className="post">
+        <Link to={`/category/${category}/${post.id}`}
+              style={{'color': '#333', 'textDecoration': 'none'}}>
+          <CardHeader
+            style={{paddingBottom: 0}}
+            title={post.title}
+            subheader={[subheader(post), <Chip key="cat" label={post.category}/>]}
+          />
+        </Link>
+        <CardContent style={{padding: "0 0 10px 0"}}>
+          <PostSubBar post={post}/>
+        </CardContent>
+      </Card>
+    </div>
+  }
 }
+
+Post = connect(
+  (state) => {
+    return {state}
+  },
+  {
+    getPostComments: actions.getPostComments,
+  })(Post)
 
 class PostList extends React.Component {
   render() {
@@ -84,15 +102,9 @@ function mapStateToProps(state) {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    fetchPosts: () => dispatch(
-      actions.fetchPosts() // get all the posts
-    ),
-  }
-}
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  {
+    fetchPosts: actions.fetchPosts,
+  },
 )(PostList)

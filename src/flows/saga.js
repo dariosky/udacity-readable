@@ -46,16 +46,6 @@ function* doSavePost(action) {
 }
 
 /* post Details */
-function* doGetComments(action) {
-  try {
-    if (delayedRequest) yield delay(3000)
-
-    const comments = yield call(api.getComments, action.id)
-    yield put(actions.getCommentsSucceeded(comments))
-  } catch (e) {
-    yield put(actions.getCommentsFailed(e.message))
-  }
-}
 
 function* doDeleteComment(action) {
   try {
@@ -72,8 +62,11 @@ function* doPostComment(action) {
   try {
     if (delayedRequest) yield delay(1000)
 
-    const comment = yield call(api.postComment, action.comment)
-    yield put(actions.postCommentResult({success: true, comment}))
+    const comment = yield call(api.postComment,
+      action.comment)
+    yield put(actions.postCommentResult({
+      success: true, comment,
+    }))
   } catch (e) {
     yield put(actions.postCommentResult({
       success: false,
@@ -156,6 +149,20 @@ function* doEditComment(action) {
   }
 }
 
+function* doGetPostComments(action) {
+  try {
+    if (delayedRequest) yield delay(500)
+
+    const comments = yield call(
+      api.getComments, action.postId,
+    )
+    yield put(actions.setPostComments(
+      action.postId, comments,
+    ))
+  } catch (e) {
+    console.error(e)
+  }
+}
 
 /*
   The sagas for the async calls
@@ -174,10 +181,6 @@ function* savePostSaga() {
 
 function* changeCategorySaga() {
   yield takeEvery(actions.CHANGE_CATEGORY, doChangeCategory)
-}
-
-function* getCommentsSaga() {
-  yield takeEvery(actions.CHANGE_POST, doGetComments)
 }
 
 function* deleteCommentSaga() {
@@ -204,13 +207,17 @@ function* editCommentSaga() {
   yield takeEvery(actions.EDIT_COMMENT, doEditComment)
 }
 
+function* getPostCommentsSaga() {
+  yield takeEvery(actions.GET_POST_COMMENTS,
+    doGetPostComments)
+}
+
 export default function* rootSaga() {
   yield all([
     fetchPostSaga(),
     fetchCategoriesSaga(),
     changeCategorySaga(),
     savePostSaga(),
-    getCommentsSaga(),
     deleteCommentSaga(),
     postCommentSaga(),
     postDeleteSaga(),
@@ -218,6 +225,7 @@ export default function* rootSaga() {
     postVoteSaga(),
     commentVoteSaga(),
     editCommentSaga(),
+    getPostCommentsSaga(),
   ])
 }
 

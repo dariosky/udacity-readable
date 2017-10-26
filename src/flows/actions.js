@@ -18,8 +18,6 @@ export const SORT_BY = 'SORT_BY'
 export const SORT_DIRECTION = 'SORT_DIRECTION'
 
 export const CHANGE_POST = 'CHANGE_POST'
-export const GET_COMMENTS_SUCCEEDED = 'GET_COMMENTS_SUCCEEDED'
-export const GET_COMMENTS_FAILED = 'GET_COMMENTS_FAILED'
 
 export const DELETE_COMMENT = 'DELETE_COMMENT'
 export const DELETE_COMMENT_SUCCEEDED = 'DELETE_COMMENT_SUCCEEDED'
@@ -41,6 +39,9 @@ export const DOWN_VOTE = 'downVote'
 
 export const EDIT_COMMENT = 'EDIT_COMMENT'
 export const EDIT_COMMENT_RESULT = 'EDIT_COMMENT_RESULT'
+
+export const GET_POST_COMMENTS = 'GET_POST_COMMENTS'
+export const SET_POST_COMMENTS = 'SET_POST_COMMENTS'
 
 /* posts */
 export function fetchPosts(category) {
@@ -112,14 +113,6 @@ export function changePost(postId) {
   return {type: CHANGE_POST, id: postId}
 }
 
-export function getCommentsSucceeded(comments) {
-  return {type: GET_COMMENTS_SUCCEEDED, comments}
-}
-
-export function getCommentsFailed(message) {
-  return {type: GET_COMMENTS_FAILED, message}
-}
-
 export function deleteComment(id) {
   return {type: DELETE_COMMENT, id}
 }
@@ -170,4 +163,14 @@ export function editComment(commentId, body) {
 
 export function editCommentResult(result) {
   return {type: EDIT_COMMENT_RESULT, result}
+}
+
+export function getPostComments(postId) {
+  // request for the comments of a post
+  return {type: GET_POST_COMMENTS, postId}
+}
+
+export function setPostComments(postId, comments) {
+  // got the comments of a post
+  return {type: SET_POST_COMMENTS, postId, comments}
 }

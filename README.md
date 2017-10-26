@@ -57,9 +57,14 @@ I used 4 reducers:
 * categories: is queried once to get the available categories
 	and keep state of the current once
 * options: for the application preferences, currently just the sort order
-* postDetail: the state for an eventual post detail,
-	here we keep the open postId and its comments
-
+* comments: the state for comments,
+	here we keep the open postId and all comments for current posts.
+	
 For convenience the application is also hosted 
 in http://readable.netlify.com/
 (but it works with your server API on your localhost)
+
+We ask for all comments for visible posts,
+because the requirements are asking to show their count.
+I would be better if the API return the comment count in the
+properties of a comment.

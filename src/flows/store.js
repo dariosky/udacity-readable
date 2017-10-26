@@ -1,6 +1,6 @@
 import {applyMiddleware, compose, createStore} from 'redux'
 import createSagaMiddleware from 'redux-saga'
-import reducer from '../flows/reducers'
+import reducer from '../reducers/index'
 import saga from './saga'
 
 const logger = store => next => action => {

@@ -87,7 +87,7 @@ Comment = connect(
 class CommentList extends React.Component {
   render() {
     let unsortedComments = this.props.comments
-    if (unsortedComments === null) return <LinearProgress/>
+    if (!unsortedComments) return <LinearProgress/>
     if (unsortedComments.length === 0) return <Message
       type="subheading"
       message="There are no comments in this post yet"/>
@@ -106,9 +106,9 @@ class CommentList extends React.Component {
 }
 
 function mapStateToProps(state) {
-  // subscribe to store changes - when they happen, put them in the component store
+  const postId = state.comments.id
   return {
-    comments: state.postDetail.comments,
+    comments: state.comments[postId],
   }
 }
 
