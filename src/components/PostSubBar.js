@@ -35,6 +35,13 @@ CommentCounts = connect(
 )(CommentCounts)
 
 class PostSubBar extends React.Component {
+  handleDelete = () => {
+    this.props.deletePost(this.props.post.id)
+
+    // callback after deletion
+    if (this.props.redirect) this.props.redirect()
+  }
+
   render() {
     const post = this.props.post
 
@@ -50,7 +57,7 @@ class PostSubBar extends React.Component {
       </span>
       <CommentCounts post={post}/>
 
-      <Button aria-label="Delete" onClick={() => this.props.deletePost(post.id)}>
+      <Button aria-label="Delete" onClick={this.handleDelete}>
         <DeleteIcon style={{color: "tomato"}}/>
       </Button>
 

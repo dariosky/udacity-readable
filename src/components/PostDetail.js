@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import * as actions from '../flows/actions'
-import {Button, Card, CardContent, CardHeader, LinearProgress, Typography,} from 'material-ui'
+import {Card, CardContent, CardHeader, LinearProgress, Typography,} from 'material-ui'
 import Message from './Message'
 import {subheader} from './Posts'
 import CategoryList from './Categories'
@@ -10,7 +10,6 @@ import EditPostDialog from './EditPostDialog'
 import CommentList from './Comments'
 import CommentForm from './CommentForm'
 import PostSubBar from './PostSubBar'
-import DeleteIcon from 'material-ui-icons/Delete'
 import withRouter from 'react-router-dom/es/withRouter'
 
 class PostDetail extends React.Component {
@@ -31,12 +30,9 @@ class PostDetail extends React.Component {
       this.props.getPostComments(postId)
   }
 
-  handleDelete = () => {
-    const currentPostId = this.props.state.comments.id
-    this.props.deletePost(currentPostId)
+  redirectToCategory = () => {
     const post = this.getCurrentPost(),
       history = this.props.history
-
     history.push(`/category/${post.category}`)
   }
 
@@ -70,17 +66,8 @@ class PostDetail extends React.Component {
             {post.body}
           </Typography>
 
-          <PostSubBar post={post}/>
-
-          <Button fab
-                  aria-label="Delete"
-                  style={{
-                    position: "absolute",
-                    right: 60,
-                  }}
-                  onClick={this.handleDelete}>
-            <DeleteIcon style={{color: "tomato"}}/>
-          </Button>
+          <PostSubBar post={post}
+                      redirect={this.redirectToCategory}/>
         </CardContent>
       </Card>
 

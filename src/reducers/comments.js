@@ -11,10 +11,10 @@ export function comments(state = {id: null}, action) {
 
     case actions.DELETE_POST_RESULT: {
       const {result} = action
-      if (result.success && result.post.id === state.id) {
+      if (result.success) {
         // delete the comments of the deleted post
         // change the current post.id if we deleted the current
-        const {[result.post.id]: deleted, ...rest} = state.comments
+        const {[result.post.id]: deleted, ...rest} = state
         console.log('deleted post', result.post.id, deleted)
         return {
           ...rest,
